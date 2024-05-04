@@ -646,13 +646,13 @@ const renderDeposit = () => {
     dataMetodePembayaran.user = jsonDataUser;
     dataMetodePembayaran.user_selected = userSelected;
     dataMetodePembayaran.bayar = 0;
-    dataMetodePembayaran.dibayarkan_oleh = row.customer.nama_customer;
-    dataMetodePembayaran.kembalian = getPembayaranServis.kembalian;
-    dataMetodePembayaran.hutang = getPembayaranServis.hutang;
+    dataMetodePembayaran.dibayarkan_oleh = row.customer.nama_customer || "";
+    dataMetodePembayaran.kembalian = getPembayaranServis.kembalian || 0;
+    dataMetodePembayaran.hutang = getPembayaranServis.hutang || 0;
     dataMetodePembayaran.nomor_kartu = "";
     dataMetodePembayaran.nama_pemilik_kartu = "";
-    dataMetodePembayaran.saldo_deposit = saldoDepositCustomer;
-    dataMetodePembayaran.sisasaldo_deposit = saldoDepositCustomer;
+    dataMetodePembayaran.saldo_deposit = saldoDepositCustomer || 0;
+    dataMetodePembayaran.sisasaldo_deposit = saldoDepositCustomer || 0;
     dataMetodePembayaran.index = 0;
 
     metodePembayaran.push(dataMetodePembayaran);
@@ -700,14 +700,14 @@ const afterPayService = () => {
             dataMetodePembayaran.sub_pembayaran_selected = getSubPembayaran;
             dataMetodePembayaran.user = jsonDataUser;
             dataMetodePembayaran.user_selected = userSelected;
-            dataMetodePembayaran.bayar = value.bayar_pservis;
-            dataMetodePembayaran.dibayarkan_oleh = value.dibayaroleh_pservis;
-            dataMetodePembayaran.kembalian = value.kembalian_pservis;
-            dataMetodePembayaran.hutang = value.hutang_pservis;
+            dataMetodePembayaran.bayar = value.bayar_pservis || 0;
+            dataMetodePembayaran.dibayarkan_oleh = value.dibayaroleh_pservis || "";
+            dataMetodePembayaran.kembalian = value.kembalian_pservis || 0;
+            dataMetodePembayaran.hutang = value.hutang_pservis || 0;
             dataMetodePembayaran.nomor_kartu = "";
             dataMetodePembayaran.nama_pemilik_kartu = "";
-            dataMetodePembayaran.saldo_deposit = saldoDeposit;
-            dataMetodePembayaran.sisasaldo_deposit = saldoDeposit - value.bayar_pservis;
+            dataMetodePembayaran.saldo_deposit = saldoDeposit || 0;
+            dataMetodePembayaran.sisasaldo_deposit = (saldoDeposit - value.bayar_pservis) || 0;
             dataMetodePembayaran.index = index;
 
             pushMetodePembayaran.push(dataMetodePembayaran);
@@ -778,6 +778,7 @@ const handleButtonBayar = () => {
                 value.kategori_pembayaran_selected === undefined ||
                 value.sub_pembayaran_selected === undefined ||
                 value.bayar === "" ||
+                value.bayar === 0 ||
                 value.user_selected === undefined ||
                 value.nama_pemilik_kartu === "" ||
                 value.nomor_kartu === "" ||
@@ -796,6 +797,7 @@ const handleButtonBayar = () => {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     totalHargaItems == 0
@@ -807,7 +809,8 @@ const handleButtonBayar = () => {
             } else {
                 if (
                     value.kategori_pembayaran_selected === undefined ||
-                    value.bayar === ""
+                    value.bayar === "" ||
+                    value.bayar === 0
                 ) {
                     buttonDisabledDeposit = true;
                 } else {
@@ -820,6 +823,9 @@ const handleButtonBayar = () => {
         buttonDisabledTidakLangsung ||
         buttonDisabledLangsung ||
         buttonDisabledDeposit;
+    if(metodePembayaran.length === 0){
+        buttonDisabled = true;
+    }
     $(".btn-submit-data").attr("disabled", buttonDisabled);
 };
 

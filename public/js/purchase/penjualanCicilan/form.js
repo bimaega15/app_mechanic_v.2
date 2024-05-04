@@ -518,6 +518,7 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.nama_pemilik_kartu === "" ||
                     value.nomor_kartu === "" ||
@@ -532,6 +533,7 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     totalHargaItems == 0
@@ -543,6 +545,9 @@ $(document).ready(function () {
             }
         });
         buttonDisabled = buttonDisabledTidakLangsung || buttonDisabledLangsung;
+        if(metodePembayaran.length === 0){
+            buttonDisabled = true;
+        }
         $(".btn-bayar").attr("disabled", buttonDisabled);
     };
 

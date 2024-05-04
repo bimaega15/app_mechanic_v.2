@@ -679,6 +679,7 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.nama_pemilik_kartu === "" ||
                     value.nomor_kartu === "" ||
@@ -694,6 +695,7 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     orderItems.length == 0 ||
@@ -706,6 +708,9 @@ $(document).ready(function () {
             }
         });
         buttonDisabled = buttonDisabledTidakLangsung || buttonDisabledLangsung;
+        if(metodePembayaran.length === 0){
+            buttonDisabled = true;
+        }
         $(".btn-bayar").attr("disabled", buttonDisabled);
     };
 
@@ -1013,7 +1018,7 @@ $(document).ready(function () {
             dataMetodePembayaran.supplier = getSupplier;
             dataMetodePembayaran.bayar = 0;
             dataMetodePembayaran.dibayarkan_oleh =
-                getSupplier && getSupplier.nama_supplier;
+                (getSupplier && getSupplier.nama_supplier) || '';
             dataMetodePembayaran.kembalian = 0;
             dataMetodePembayaran.hutang =
                 metodePembayaran.length == 0 ? totalHargaItems : 0;
@@ -1212,6 +1217,8 @@ $(document).ready(function () {
     body.on("click", ".btn-confirm-bayar", function (e) {
         e.preventDefault();
 
+        console.log('get payload kasir', payloadKasir());
+        return;
         $.ajax({
             type: "post",
             url: $(".url_simpan_kasir").data("url"),

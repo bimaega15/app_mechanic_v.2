@@ -498,6 +498,7 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
+                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.nama_pemilik_kartu === "" ||
                     value.nomor_kartu === ""
@@ -515,6 +516,7 @@ $(document).ready(function () {
                         value.kategori_pembayaran_selected === undefined ||
                         value.sub_pembayaran_selected === undefined ||
                         value.bayar === "" ||
+                        value.bayar === 0 ||
                         value.jumlah_deposit === "" ||
                         value.user_selected === undefined ||
                         value.dibayarkan_oleh === ""
@@ -526,7 +528,8 @@ $(document).ready(function () {
                 } else {
                     if (
                         value.kategori_pembayaran_selected === undefined ||
-                        value.bayar === ""
+                        value.bayar === "" ||
+                        value.bayar === 0
                     ) {
                         buttonDisabledDeposit = true;
                     } else {
@@ -545,6 +548,10 @@ $(document).ready(function () {
             buttonDisabledTidakLangsung ||
             buttonDisabledLangsung ||
             buttonDisabledDeposit;
+
+        if(metodePembayaran.length === 0){
+            buttonDisabled = true;
+        }
         $(".btn-bayar").attr("disabled", buttonDisabled);
     };
     // end benar
