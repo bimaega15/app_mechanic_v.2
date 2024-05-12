@@ -29,11 +29,13 @@ var metodePembayaran = [];
 var totalHargaItems = '';
 var saldoDepositCustomer = '';
 var customerId = '';
+var createdApp = '';
 // end pengembalian servis
 
 var statusPservis = "";
 var urlRoot = $(".url_root").data("url");
 var allowedPservis = ['sudah diambil', 'komplain garansi'];
+var messageWa = ['bisa diambil', 'sudah diambil'];
 
 
 const handleAnotherMethodLangsung = () => {
@@ -290,15 +292,14 @@ const viewMetodePembayaran = () => {
         <div class="row mt-3">
             <div class="col-lg-6">
                 <div class="form-group">
-                    <select data-index="${index}" name="kategori_pembayaran_id_mp" class="form-control" ${ allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                    <select data-index="${index}" name="kategori_pembayaran_id_mp" class="form-control" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                         <option value="">-- Kategori Pembayaran --</option>`;
             value.kategori_pembayaran.map((v, i) => {
                 output += `
-                <option value="${v.id}" ${
-                    v.id === value.kategori_pembayaran_selected.id
+                <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                         ? "selected"
                         : ""
-                }>${v.nama_kpembayaran}</option>
+                    }>${v.nama_kpembayaran}</option>
             `;
             });
             output += `
@@ -306,7 +307,7 @@ const viewMetodePembayaran = () => {
                 </div>
             </div>
             <div class="col-lg-6">`;
-            if(!allowedPservis.includes(statusPservis)){
+            if (!allowedPservis.includes(statusPservis)) {
                 output += `
                     <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
                     <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
@@ -323,13 +324,12 @@ const viewMetodePembayaran = () => {
                         <option value="">-- Sub Pembayaran --</option>`;
             value.sub_pembayaran.map((v, i) => {
                 output += `
-            <option value="${v.id}" ${
-                    v.id ==
-                    (value.sub_pembayaran_selected &&
-                        value.sub_pembayaran_selected.id)
+            <option value="${v.id}" ${v.id ==
+                        (value.sub_pembayaran_selected &&
+                            value.sub_pembayaran_selected.id)
                         ? "selected"
                         : ""
-                }>${v.nama_spembayaran}</option>
+                    }>${v.nama_spembayaran}</option>
             `;
             });
             output += `
@@ -342,22 +342,21 @@ const viewMetodePembayaran = () => {
                     <input class="form-control" type="text" name="bayar" data-index="${index}"
                         placeholder="Masukan nominal pembayaran..."
                         value="${number_format(
-                            value.bayar,
-                            0,
-                            ".",
-                            ","
-                        )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                value.bayar,
+                0,
+                ".",
+                ","
+            )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                 </div>
             </div>
             <div class="col-lg-4">
                 <div class="form-group">
                     <label for="">Dibayar Oleh</label>
                     <input class="form-control" type="text" name="dibayar_oleh" data-index="${index}"
-                        placeholder="Dibayarkan oleh..." value="${
-                            value.dibayarkan_oleh !== undefined
-                                ? value.dibayarkan_oleh
-                                : ""
-                        }" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                        placeholder="Dibayarkan oleh..." value="${value.dibayarkan_oleh !== undefined
+                    ? value.dibayarkan_oleh
+                    : ""
+                }" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                 </div>
             </div>
         </div>
@@ -366,16 +365,15 @@ const viewMetodePembayaran = () => {
                 <div class="form-group">
                     <label for="">Akun</label>
                     <select name="akun" class="form-control"
-                    data-index="${index}" ${ allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                    data-index="${index}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                         <option value="">Akun Kasir</option>`;
             value.user.map((v, i) => {
                 output += `
-            <option value="${v.id}" ${
-                    v.id ===
-                    (value.user_selected && value.user_selected.id)
+            <option value="${v.id}" ${v.id ===
+                        (value.user_selected && value.user_selected.id)
                         ? "selected"
                         : ""
-                }>${v.name}</option>
+                    }>${v.name}</option>
             `;
             });
             output += `
@@ -422,11 +420,10 @@ const viewMetodePembayaran = () => {
                         <option value="">-- Kategori Pembayaran --</option>`;
                 value.kategori_pembayaran.map((v, i) => {
                     output += `
-                                <option value="${v.id}" ${
-                        v.id === value.kategori_pembayaran_selected.id
+                                <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                             ? "selected"
                             : ""
-                    }>${v.nama_kpembayaran}</option>
+                        }>${v.nama_kpembayaran}</option>
                             `;
                 });
                 output += `
@@ -434,14 +431,14 @@ const viewMetodePembayaran = () => {
                 </div>
             </div>
             <div class="col-lg-6">`;
-            if(!allowedPservis.includes(statusPservis)){
-                output += `
+                if (!allowedPservis.includes(statusPservis)) {
+                    output += `
                 <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
                     <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
                 </button>
                 `;
-            }
-            output += `
+                }
+                output += `
             </div>
         </div>
         <div class="row mt-3">
@@ -452,13 +449,12 @@ const viewMetodePembayaran = () => {
                         <option value="">-- Sub Pembayaran --</option>`;
                 value.sub_pembayaran.map((v, i) => {
                     output += `
-                            <option value="${v.id}" ${
-                        v.id ==
-                        (value.sub_pembayaran_selected &&
-                            value.sub_pembayaran_selected.id)
+                            <option value="${v.id}" ${v.id ==
+                            (value.sub_pembayaran_selected &&
+                                value.sub_pembayaran_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.nama_spembayaran}</option>
+                        }>${v.nama_spembayaran}</option>
                             `;
                 });
                 output += `
@@ -469,11 +465,10 @@ const viewMetodePembayaran = () => {
                 <div class="form-group">
                     <label for="">Nomor Kartu</label>
                     <input class="form-control" type="text" name="nomor_kartu" data-index="${index}"
-                        placeholder="Masukan Nomor Kartu..." value="${
-                            value.nomor_kartu !== undefined
-                                ? value.nomor_kartu
-                                : ""
-                        }">
+                        placeholder="Masukan Nomor Kartu..." value="${value.nomor_kartu !== undefined
+                        ? value.nomor_kartu
+                        : ""
+                    }">
                 </div>
             </div>
             <div class="col-lg-4">
@@ -481,11 +476,10 @@ const viewMetodePembayaran = () => {
                     <label for="">Nama Pemilik Kartu</label>
                     <input class="form-control" type="text" name="nama_pemilik_kartu"
                     data-index="${index}"
-                        placeholder="Pemilik Kartu..." value="${
-                            value.nama_pemilik_kartu !== undefined
-                                ? value.nama_pemilik_kartu
-                                : ""
-                        }">
+                        placeholder="Pemilik Kartu..." value="${value.nama_pemilik_kartu !== undefined
+                        ? value.nama_pemilik_kartu
+                        : ""
+                    }">
                 </div>
             </div>
         </div>
@@ -500,12 +494,11 @@ const viewMetodePembayaran = () => {
                         <option value="">Akun Kasir</option>`;
                 value.user.map((v, i) => {
                     output += `
-                            <option value="${v.id}" ${
-                        v.id ===
-                        (value.user_selected && value.user_selected.id)
+                            <option value="${v.id}" ${v.id ===
+                            (value.user_selected && value.user_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.name}</option>
+                        }>${v.name}</option>
                             `;
                 });
                 output += `
@@ -530,11 +523,11 @@ const viewMetodePembayaran = () => {
                     <label for="">Hutang</label>
                     <input class="form-control" type="text" name="hutang" data-index="${index}" placeholder="Hutang..."
                     value="${number_format(
-                        value.hutang,
-                        0,
-                        ".",
-                        ","
-                    )}" disabled>
+                    value.hutang,
+                    0,
+                    ".",
+                    ","
+                )}" disabled>
                 </div>
             </div>
         </div>
@@ -550,15 +543,15 @@ const viewMetodePembayaran = () => {
                         </div>
                         <div class="col-lg-4">`;
 
-                        if(!allowedPservis.includes(statusPservis)){
-                        output += `
+                if (!allowedPservis.includes(statusPservis)) {
+                    output += `
                             <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
                                 <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
                             </button>`;
-                        }
+                }
 
 
-                        output += `
+                output += `
                         </div>
                     </div>
                 </div>
@@ -568,11 +561,11 @@ const viewMetodePembayaran = () => {
                         <input class="form-control" type="text" name="saldo_deposit" data-index="${index}"
                             placeholder="Saldo Deposit..."
                             value="${number_format(
-                                value.saldo_deposit,
-                                0,
-                                ".",
-                                ","
-                            )}" disabled>
+                    value.saldo_deposit,
+                    0,
+                    ".",
+                    ","
+                )}" disabled>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -581,11 +574,11 @@ const viewMetodePembayaran = () => {
                         <input class="form-control" type="text" name="bayar" data-index="${index}"
                             placeholder="Masukan nominal pembayaran..."
                             value="${number_format(
-                                value.bayar,
-                                0,
-                                ".",
-                                ","
-                            )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                    value.bayar,
+                    0,
+                    ".",
+                    ","
+                )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                     </div>
                 </div>
             </div>
@@ -668,20 +661,20 @@ const afterPayService = () => {
     const pembayaran_servis = row.pembayaran_servis;
     const indexTarget = pembayaran_servis.findIndex(item => item.kategori_pembayaran.nama_kpembayaran.toLowerCase() === 'deposit');
     let dataPembayaran = [];
-    if(indexTarget !== -1){
+    if (indexTarget !== -1) {
         dataPembayaran = pembayaran_servis.filter((data, index) => index >= indexTarget);
     } else {
         dataPembayaran = pembayaran_servis;
     }
-    
-    if(dataPembayaran.length > 0 && allowedPservis.includes(statusPservis)){
+
+    if (dataPembayaran.length > 0 && allowedPservis.includes(statusPservis)) {
         let pushMetodePembayaran = [];
         metodePembayaran = [];
         dataPembayaran.map((value, index) => {
             const getKategoriPembayaran = jsonKategoriPembayaran.find(
                 (item) => item.nama_kpembayaran.toLowerCase() == value.kategori_pembayaran.nama_kpembayaran.toLowerCase(),
             );
-        
+
             const getSubPembayaran = jsonSubPembayaran.find(
                 (item) =>
                     item.kategori_pembayaran_id == getKategoriPembayaran.id
@@ -715,7 +708,7 @@ const afterPayService = () => {
 
         metodePembayaran = pushMetodePembayaran;
         const output = viewMetodePembayaran();
-        $(".output_metode_pembayaran").html(output); 
+        $(".output_metode_pembayaran").html(output);
     }
 }
 
@@ -770,15 +763,14 @@ const handleButtonBayar = () => {
     metodePembayaran.map((value, index) => {
         if (
             value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
-                "langsung" &&
+            "langsung" &&
             value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
-                "deposit"
+            "deposit"
         ) {
             if (
                 value.kategori_pembayaran_selected === undefined ||
                 value.sub_pembayaran_selected === undefined ||
                 value.bayar === "" ||
-                value.bayar === 0 ||
                 value.user_selected === undefined ||
                 value.nama_pemilik_kartu === "" ||
                 value.nomor_kartu === "" ||
@@ -797,7 +789,6 @@ const handleButtonBayar = () => {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
-                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     totalHargaItems == 0
@@ -809,8 +800,7 @@ const handleButtonBayar = () => {
             } else {
                 if (
                     value.kategori_pembayaran_selected === undefined ||
-                    value.bayar === "" ||
-                    value.bayar === 0
+                    value.bayar === ""
                 ) {
                     buttonDisabledDeposit = true;
                 } else {
@@ -823,7 +813,8 @@ const handleButtonBayar = () => {
         buttonDisabledTidakLangsung ||
         buttonDisabledLangsung ||
         buttonDisabledDeposit;
-    if(metodePembayaran.length === 0){
+
+    if (metodePembayaran.length === 0) {
         buttonDisabled = true;
     }
     $(".btn-submit-data").attr("disabled", buttonDisabled);
@@ -837,10 +828,10 @@ const viewRender = () => {
         data: {
             loadData: true,
         },
-        beforeSend: function(){
+        beforeSend: function () {
             $('#load_viewdata').removeClass("d-none");
         },
-        success: function(data){
+        success: function (data) {
             // penerimaan servis
             const orderBarang = data.data.row.order_barang;
             const rowData = data.data.row;
@@ -888,12 +879,13 @@ const viewRender = () => {
             jsonDefaultUser = getData.defaultUser;
             is_deposit = getData.is_deposit;
             getPembayaranServis = JSON.parse(getData.getPembayaranServis);
+            createdApp = getData.created_app;
 
             metodePembayaran = [];
             totalHargaItems = getPembayaranServis.hutang;
             saldoDepositCustomer = rowData.customer.saldo_customer.jumlah_saldocustomer;
             customerId = rowData.customer.id;
-            if(is_deposit){
+            if (is_deposit) {
                 renderDeposit();
             }
             // jika sudah melakukan pembayaran
@@ -901,7 +893,7 @@ const viewRender = () => {
             // end pengembalian servis
 
         },
-        complete: function(){
+        complete: function () {
             $('#load_viewdata').addClass("d-none");
         }
     })
@@ -912,16 +904,16 @@ const viewRenderHistori = () => {
         url: `${urlRoot}/service/outputUpdateService/${jsonPenerimaanServisId}`,
         type: 'get',
         dataType: 'json',
-        beforeSend: function(){
+        beforeSend: function () {
             $('#load_view_data_history').removeClass('d-none');
         },
         data: {
             loadDataHistory: true,
         },
-        success: function(data){
+        success: function (data) {
             $('.output_data_history').html(data.service_history);
         },
-        complete: function(){
+        complete: function () {
             $('#load_view_data_history').addClass('d-none');
         }
     })
@@ -932,14 +924,14 @@ const viewRenderServis = () => {
         url: `${urlRoot}/service/outputUpdateService/${jsonPenerimaanServisId}`,
         type: 'get',
         dataType: 'json',
-        beforeSend: function(){
+        beforeSend: function () {
             $('#load_viewdata_orderservis').removeClass('d-none');
             $('#load_output_informasi_servis').removeClass('d-none');
         },
         data: {
             loadDataServis: true,
         },
-        success: function(data){
+        success: function (data) {
             $('.output_data_servis').html(data.order_servis);
             $('.output_informasi_servis').html(data.informasi_servis);
             select2Standard({
@@ -953,18 +945,18 @@ const viewRenderServis = () => {
 
             const rowData = data.row;
             const getPembayaranServis = JSON.parse(data.getPembayaranServis);
-            if(data.row.status_pservis === 'bisa diambil'){
+            if (data.row.status_pservis === 'bisa diambil') {
                 const is_deposit = rowData.isdp_pservis;
-                if(is_deposit){
+                if (is_deposit) {
                     metodePembayaran = [];
                     totalHargaItems = getPembayaranServis.hutang;
                     saldoDepositCustomer = rowData.customer.saldo_customer.jumlah_saldocustomer;
                     renderDeposit();
                 }
             }
-            
+
         },
-        complete: function(){
+        complete: function () {
             $('#load_viewdata_orderservis').addClass('d-none');
             $('#load_output_informasi_servis').addClass('d-none');
         }
@@ -976,21 +968,21 @@ const viewRenderSparepart = (is_deposit = false) => {
         url: `${urlRoot}/service/outputUpdateService/${jsonPenerimaanServisId}`,
         type: 'get',
         dataType: 'json',
-        beforeSend: function(){
+        beforeSend: function () {
             $('#load_viewdata_order_barang').removeClass('d-none');
             $('#load_output_informasi_servis').removeClass('d-none');
         },
         data: {
             loadDataSparepart: true,
         },
-        success: function(data){
+        success: function (data) {
             $('.output_order_barang').html(data.order_barang);
             $('.output_informasi_servis').html(data.informasi_servis);
 
             const result = data.row.order_barang;
             result.map(v => {
                 const searchData = setOrderBarang.findIndex(item => item.id === v.id);
-                if(searchData === -1){
+                if (searchData === -1) {
                     setOrderBarang.push({
                         id: v.id,
                         barang_id: v.barang.id,
@@ -1021,9 +1013,9 @@ const viewRenderSparepart = (is_deposit = false) => {
 
             const rowData = data.row;
             const getPembayaranServis = JSON.parse(data.getPembayaranServis);
-            if(data.row.status_pservis === 'bisa diambil'){
+            if (data.row.status_pservis === 'bisa diambil') {
                 const is_deposit = rowData.isdp_pservis;
-                if(is_deposit){
+                if (is_deposit) {
                     metodePembayaran = [];
                     totalHargaItems = getPembayaranServis.hutang;
                     saldoDepositCustomer = rowData.customer.saldo_customer.jumlah_saldocustomer;
@@ -1031,7 +1023,7 @@ const viewRenderSparepart = (is_deposit = false) => {
                 }
             }
         },
-        complete: function(){
+        complete: function () {
             $('#load_viewdata_order_barang').addClass('d-none');
             $('#load_output_informasi_servis').addClass('d-none');
         }
@@ -1055,7 +1047,7 @@ const renderMetodePembayaran = (value) => {
             (item) => item.id == jsonDefaultUser
         );
         // user
-        let defaultUser = {};
+        let defaultUser = undefined;
         if (getDefaultUser !== -1) {
             defaultUser = jsonDataUser[getDefaultUser];
         }
@@ -1064,7 +1056,7 @@ const renderMetodePembayaran = (value) => {
         dataMetodePembayaran.kategori_pembayaran_selected =
             getKategoriPembayaran;
         dataMetodePembayaran.sub_pembayaran = getSubPembayaran;
-        dataMetodePembayaran.sub_pembayaran_selected = {};
+        dataMetodePembayaran.sub_pembayaran_selected = undefined;
         dataMetodePembayaran.user = jsonDataUser;
         dataMetodePembayaran.user_selected = defaultUser;
         dataMetodePembayaran.bayar = 0;
@@ -1092,7 +1084,7 @@ var setOrderBarang = [];
 $(document).ready(function () {
     viewRender();
     handleButtonBayar();
-    
+
     var body = $("body");
     body.on("click", ".detail-customer", function () {
         showModal({
@@ -1149,7 +1141,7 @@ $(document).ready(function () {
             success: function (data) {
                 viewRenderServis();
             },
-        });        
+        });
     });
 
     body.on("click", ".delete-order-servis", function (e) {
@@ -1257,7 +1249,7 @@ $(document).ready(function () {
             data: payload,
             success: function (data) {
                 viewRenderSparepart();
-            
+
             },
         });
     };
@@ -1343,7 +1335,7 @@ $(document).ready(function () {
     const handleDisplayInput = () => {
         setOrderBarang.map((vItem, iItem) => {
             $(`input[name="qty_orderbarang"][data-id="${vItem.id}"]`).val(
-                formatNumber(vItem.qty_orderbarang)
+                formatNumber(parseInt(vItem.qty_orderbarang, 10))
             );
             $(
                 `select[name="typediskon_orderbarang"][data-id="${vItem.id}"]`
@@ -1364,7 +1356,7 @@ $(document).ready(function () {
             ).val(value.kategori_pembayaran_selected.id);
             $(`select[name="sub_pembayaran_id_mp"][data-index="${index}"]`).val(
                 value.sub_pembayaran_selected &&
-                    value.sub_pembayaran_selected.id
+                value.sub_pembayaran_selected.id
             );
             $(`input[name="sisasaldo_deposit"][data-index="${index}"]`).val(
                 formatNumber(value.sisasaldo_deposit)
@@ -1594,7 +1586,7 @@ $(document).ready(function () {
         }
 
         let getValueStatus = $('select[name="status_pservis"]').val();
-        if(statusPservis == 'bisa diambil'){
+        if (statusPservis == 'bisa diambil') {
             getValueStatus = statusPservis;
         }
 
@@ -1633,8 +1625,8 @@ $(document).ready(function () {
                 (item.bayar == ""
                     ? 0
                     : isNaN(item.bayar)
-                    ? 0
-                    : parseFloat(item.bayar))
+                        ? 0
+                        : parseFloat(item.bayar))
             );
         }, 0);
         const lastMetode = metodePembayaran.length - 1;
@@ -1754,7 +1746,7 @@ $(document).ready(function () {
     };
 
     body.on("click", ".btn-submit-data", function (e) {
-        e.preventDefault();        
+        e.preventDefault();
         if (statusPservis == "estimasi servis") {
             $.ajax({
                 url: `${urlRoot}/service/estimasiServis/${jsonPenerimaanServisId}/nextProcess`,
@@ -1764,7 +1756,7 @@ $(document).ready(function () {
             viewRender();
         }
 
-        if(allowedPservis.includes(statusPservis)){
+        if (allowedPservis.includes(statusPservis)) {
             const garansi_pservis = $('textarea[name="garansi_pservis"]').val();
             $.ajax({
                 url: `${urlRoot}/service/garansi/${jsonPenerimaanServisId}/update?_method=put`,
@@ -1773,13 +1765,13 @@ $(document).ready(function () {
                     garansi_pservis: garansi_pservis,
                 },
                 dataType: "json",
-                beforeSend: function(){
+                beforeSend: function () {
                     clearError422();
                     $(".btn-submit-data").attr("disabled", true);
                     $(".btn-submit-data").html(disableButton);
                 },
-                success: function(data){
-                    if(data.status == 'error'){
+                success: function (data) {
+                    if (data.status == 'error') {
                         runToast({
                             title: 'Failed',
                             type: 'bg-danger',
@@ -1787,7 +1779,7 @@ $(document).ready(function () {
                         })
                     }
 
-                    if(data.status == 'success'){
+                    if (data.status == 'success') {
                         runToast({
                             title: 'Successfully',
                             type: 'bg-success',
@@ -1802,7 +1794,7 @@ $(document).ready(function () {
                         showErrors422(jqXHR);
                     }
                 },
-                complete: function(){
+                complete: function () {
                     $(".btn-submit-data").attr("disabled", false);
                     $(".btn-submit-data").html(enableButton);
                 }
@@ -1812,13 +1804,13 @@ $(document).ready(function () {
         }
 
         const error = validateFormPenerimaan();
-        if(error) return;
+        if (error) return;
 
         let payload = payloadSubmit();
         const allowedPengembalian = ['bisa diambil'];
-        if(allowedPengembalian.includes(statusPservis)){
+        if (allowedPengembalian.includes(statusPservis)) {
             const errorPengembalian = validateFormPengembalian();
-            if(errorPengembalian) return;
+            if (errorPengembalian) return;
 
             const dataPayloadPengembalian = payloadPengembalian();
             payload.is_pengembalian_servis = true;
@@ -1847,7 +1839,7 @@ $(document).ready(function () {
                     const allowedPengembalian = ['bisa diambil'];
                     viewRenderHistori();
                     const booleanStatusPServis = allowedPengembalian.includes(statusPservis);
-                    if(!booleanStatusPServis){
+                    if (!booleanStatusPServis) {
                         const is_deposit = rowData.isdp_pservis;
                         metodePembayaran = [];
 
@@ -1859,8 +1851,27 @@ $(document).ready(function () {
                     statusPservis = data.row.status_pservis;
                     jsonServiceHistory = data.row.service_history;
 
-                    if(allowedPservis.includes(statusPservis)){
+                    if (allowedPservis.includes(statusPservis)) {
                         viewRender();
+                    }
+                    if (messageWa.includes(statusPservis)) {
+                        const customer = row.customer;
+                        const nowa_customer = customer.nowa_customer;
+                        const nama_customer = customer.nama_customer;
+                        const message = $('textarea[name="pesanwa_pservis"]').val();
+                        const createdAt = formatDateIndonesiaCreatedAt();
+
+                        const encodedMessage = encodeURIComponent(
+                            `Kepada Yth:\n 
+                            Customer: ${nama_customer}\n 
+                            ${message}\n tanggal pengambilan servis ${createdAt}.
+                            \nTerimakasih,
+                            \nSalam dari ${createdApp}`
+                        );
+
+                        const sendMessage = `https://wa.me/${nowa_customer}?text=${encodedMessage}`;
+                        window.open(sendMessage, "_blank");
+
                     }
                 },
                 error: function (jqXHR, exception) {
@@ -1898,7 +1909,7 @@ $(document).ready(function () {
 
         return output;
     };
-    
+
     const renderPrintKasirCompleted = () => {
         var output = "";
         $.ajax({
@@ -1931,7 +1942,7 @@ $(document).ready(function () {
         let tipe = $(this).data('tipe');
         tipe = tipe.trim();
 
-        if(tipe == 'selesai'){
+        if (tipe == 'selesai') {
             const output = renderPrintKasirCompleted();
             printOutput(output);
         } else {

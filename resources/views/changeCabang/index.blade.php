@@ -19,5 +19,5 @@
 
 </div>
 
-
+<script class="baseurl" data-value="{{ url('/') }}"></script>
 <script src="{{ asset('js/changeCabang/form.js') }}"></script>

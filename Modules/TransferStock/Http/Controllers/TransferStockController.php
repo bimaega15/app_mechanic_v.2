@@ -7,7 +7,6 @@ use App\Models\Barang;
 use App\Models\Cabang;
 use App\Models\TransferDetail;
 use App\Models\TransferStock;
-use Faker\Provider\bn_BD\Utils;
 use Illuminate\Contracts\Support\Renderable;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -42,7 +41,6 @@ class TransferStockController extends Controller
         $id = $request->input('id');
         // end if is edit
 
-
         $data = [
             'array_cabang' => $array_cabang,
             'kodeTStock' => $kodeTStock,
@@ -62,7 +60,10 @@ class TransferStockController extends Controller
                 $isEdit = $request->input('isEdit');
                 $id = $request->input('id');
                 $transferStock = new TransferStock();
-                $dataTransferStock = $transferStock->getTransferStock()->find($id);
+                $dataTransferStock = $transferStock->getTransferStock()
+                    ->orWhere('cabang_id_awal', session()->get('cabang_id'))
+                    ->orWhere('cabang_id_penerima', session()->get('cabang_id'))
+                    ->find($id);
 
                 return response()->json($dataTransferStock);
             }
@@ -106,37 +107,40 @@ class TransferStockController extends Controller
             $id = $transfer_edit['id'];
 
             $getTransferStock = new TransferStock();
-            $data = $getTransferStock->getTransferStock()->find($id);
+            $data = $getTransferStock->getTransferStock()
+                ->orWhere('cabang_id_awal', session()->get('cabang_id'))
+                ->orWhere('cabang_id_penerima', session()->get('cabang_id'))
+                ->find($id);
 
             // rollback stok
-            $cabang_id_penerima = $data->cabang_id_penerima;
-            $cabang_id_awal = $data->cabang_id_awal;
+            // $cabang_id_penerima = $data->cabang_id_penerima;
+            // $cabang_id_awal = $data->cabang_id_awal;
 
-            foreach ($data->transferDetail as $key => $item) {
-                $barang_id = $item->barang_id;
-                $qty = $item->qty_tdetail;
+            // foreach ($data->transferDetail as $key => $item) {
+            //     $barang_id = $item->barang_id;
+            //     $qty = $item->qty_tdetail;
 
-                $getBarang = Barang::where('id', $barang_id)->first();
-                $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                    ->where('cabang_id', $cabang_id_penerima)
-                    ->first();
+            //     $getBarang = Barang::where('id', $barang_id)->first();
+            //     $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
+            //         ->where('cabang_id', $cabang_id_penerima)
+            //         ->first();
 
-                if ($getBarangCabangPenerima) {
-                    $getBarangCabangPenerima->update([
-                        'stok_barang' => $getBarangCabangPenerima->stok_barang - $qty,
-                    ]);
-                }
+            //     if ($getBarangCabangPenerima) {
+            //         $getBarangCabangPenerima->update([
+            //             'stok_barang' => $getBarangCabangPenerima->stok_barang - $qty,
+            //         ]);
+            //     }
 
-                $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                    ->where('cabang_id', $cabang_id_awal)
-                    ->first();
+            //     $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
+            //         ->where('cabang_id', $cabang_id_awal)
+            //         ->first();
 
-                if ($getBarangCabangPemberi) {
-                    $getBarangCabangPemberi->update([
-                        'stok_barang' => $getBarangCabangPemberi->stok_barang + $qty,
-                    ]);
-                }
-            }
+            //     if ($getBarangCabangPemberi) {
+            //         $getBarangCabangPemberi->update([
+            //             'stok_barang' => $getBarangCabangPemberi->stok_barang + $qty,
+            //         ]);
+            //     }
+            // }
 
             $data->delete();
         }
@@ -161,34 +165,33 @@ class TransferStockController extends Controller
         TransferDetail::insert($new_transfer_detail);
 
         // memindahkan stock
-        $cabang_id_awal = $transfer_stock['cabang_id_awal'];
-        $cabang_id_penerima = $transfer_stock['cabang_id_penerima'];
-        foreach ($transfer_detail as $key => $item) {
-            $barang_id = $item['barang_id'];
-            $qty = $item['qty_tdetail'];
+        // $cabang_id_awal = $transfer_stock['cabang_id_awal'];
+        // $cabang_id_penerima = $transfer_stock['cabang_id_penerima'];
+        // foreach ($transfer_detail as $key => $item) {
+        //     $barang_id = $item['barang_id'];
+        //     $qty = $item['qty_tdetail'];
 
-            $getBarang = Barang::where('id', $barang_id)->first();
-            $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                ->where('cabang_id', $cabang_id_penerima)
-                ->first();
+        //     $getBarang = Barang::where('id', $barang_id)->first();
+        //     $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
+        //         ->where('cabang_id', $cabang_id_penerima)
+        //         ->first();
 
-            if ($getBarangCabangPenerima) {
-                $getBarangCabangPenerima->update([
-                    'stok_barang' => $getBarangCabangPenerima->stok_barang + $qty,
-                ]);
-            }
+        //     if ($getBarangCabangPenerima) {
+        //         $getBarangCabangPenerima->update([
+        //             'stok_barang' => $getBarangCabangPenerima->stok_barang + $qty,
+        //         ]);
+        //     }
 
-            $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                ->where('cabang_id', $cabang_id_awal)
-                ->first();
+        //     $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
+        //         ->where('cabang_id', $cabang_id_awal)
+        //         ->first();
 
-            if ($getBarangCabangPemberi) {
-                $getBarangCabangPemberi->update([
-                    'stok_barang' => $getBarangCabangPemberi->stok_barang - $qty,
-                ]);
-            }
-        }
-
+        //     if ($getBarangCabangPemberi) {
+        //         $getBarangCabangPemberi->update([
+        //             'stok_barang' => $getBarangCabangPemberi->stok_barang - $qty,
+        //         ]);
+        //     }
+        // }
 
         return response()->json('Berhasil transfer barang');
     }

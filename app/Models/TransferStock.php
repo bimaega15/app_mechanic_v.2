@@ -50,6 +50,7 @@ class TransferStock extends Model
 
     public function getTransferStock()
     {
-        return TransferStock::dataTable()->with('transferDetail', 'transferDetail.barang', 'users', 'cabang', 'cabangPenerima', 'cabangPemberi', 'usersPenerima');
+        return TransferStock::dataTable()->with('transferDetail', 'transferDetail.barang', 'users', 'cabang', 'cabangPenerima', 'cabangPemberi', 'usersPenerima')
+        ->orderBy('transfer_stock.id', 'desc');
     }
 }

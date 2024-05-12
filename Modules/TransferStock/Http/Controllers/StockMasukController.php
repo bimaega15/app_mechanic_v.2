@@ -30,7 +30,7 @@ class StockMasukController extends Controller
         if ($request->ajax()) {
             $transferMasuk = new TransferStock();
             $data = $transferMasuk->getTransferStock()
-                ->where('cabang_id_penerima', session()->get('cabang_id'));
+                ->orWhere('cabang_id_penerima', session()->get('cabang_id'));
 
             return DataTables::eloquent($data)
                 ->addColumn('created_at', function ($row) {
@@ -87,21 +87,60 @@ class StockMasukController extends Controller
     public function show($id)
     {
         $transferMasuk = new TransferStock();
-        $row = $transferMasuk->getTransferStock()->find($id);
+        $row = $transferMasuk->getTransferStock()
+            ->orWhere('cabang_id_penerima', session()->get('cabang_id'))
+            ->find($id);
         $status_tstock = $this->datastatis['status_tstock'];
         $array_status_tstock = [];
+        $status_tstock_data = [];
         foreach ($status_tstock as $key => $item) {
             $array_status_tstock[] = [
                 'id' => $key,
                 'label' => $item
             ];
+            $status_tstock_data[] = strtolower($item);
         }
-        return view('transferstock::stokMasuk.detail', compact('row', 'array_status_tstock'));
+        return view('transferstock::stokMasuk.detail', compact('row', 'array_status_tstock', 'status_tstock_data'));
     }
 
     public function updateStatus(Request $request, $id)
     {
         $status_tstock = $request->input('status_tstock');
+        $transferMasuk = new TransferStock();
+        $row = $transferMasuk->getTransferStock()
+            ->orWhere('cabang_id_penerima', session()->get('cabang_id'))
+            ->find($id);
+
+        if ($status_tstock == 'diterima') {
+            // memindahkan stock
+            $cabang_id_awal = $row->cabang_id_awal;
+            $cabang_id_penerima = $row->cabang_id_penerima;
+            foreach ($row->transferDetail as $key => $item) {
+                $barang_id = $item->barang_id;
+                $qty = $item->qty_tdetail;
+
+                $getBarang = Barang::where('id', $barang_id)->first();
+                $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
+                    ->where('cabang_id', $cabang_id_penerima)
+                    ->first();
+
+                if ($getBarangCabangPenerima) {
+                    $getBarangCabangPenerima->update([
+                        'stok_barang' => $getBarangCabangPenerima->stok_barang + $qty,
+                    ]);
+                }
+
+                $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
+                    ->where('cabang_id', $cabang_id_awal)
+                    ->first();
+
+                if ($getBarangCabangPemberi) {
+                    $getBarangCabangPemberi->update([
+                        'stok_barang' => $getBarangCabangPemberi->stok_barang - $qty,
+                    ]);
+                }
+            }
+        }
         $transferMasuk = TransferStock::find($id);
         $transferMasuk->status_tstock = $status_tstock;
         $transferMasuk->tanggalditerima_tstock = date('Y-m-d H:i:s');
@@ -109,5 +148,15 @@ class StockMasukController extends Controller
         $transferMasuk->save();
 
         return response()->json('Status berhasil diubah');
+    }
+
+    public function print($id)
+    {
+        $transferKeluar = new TransferStock();
+        $row = $transferKeluar->getTransferStock()
+            ->orWhere('cabang_id_penerima', session()->get('cabang_id'))
+            ->find($id);
+
+        return view('transferstock::stokKeluar.print', compact('row'));
     }
 }

@@ -20,12 +20,14 @@ class SelectSearchController extends Controller
         $search = $request->input('search');
         $page = $request->input('page');
         $getUsers = new User();
-        $dataUsers = $getUsers->getUsersKasir()
-            ->whereHas('roles', function ($query) use ($search) {
+        $dataUsers = $getUsers->getUsersKasir();
+        if ($search != '') {
+            $dataUsers->whereHas('roles', function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->paginate(10, ['*'], 'page', $page);
+                ->orWhere('name', 'like', '%' . $search . '%');
+        }
+        $dataUsers = $dataUsers->paginate(10, ['*'], 'page', $page);
 
         $output = [];
         $output[] = [
@@ -41,12 +43,14 @@ class SelectSearchController extends Controller
         }
 
         // count filtered
-        $countFiltered = $getUsers->getUsersKasir()
-            ->whereHas('roles', function ($query) use ($search) {
+        $countFiltered = $getUsers->getUsersKasir();
+        if ($search != '') {
+            $countFiltered->whereHas('roles', function ($query) use ($search) {
                 $query->where('name', 'like', '%' . $search . '%');
             })
-            ->orWhere('name', 'like', '%' . $search . '%')
-            ->count();
+                ->orWhere('name', 'like', '%' . $search . '%');
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -59,10 +63,12 @@ class SelectSearchController extends Controller
         $search = $request->input('search');
         $page = $request->input('page');
         $getCustomer = Customer::dataTable()
-            ->where('status_customer', true)
-            ->where('nama_customer', 'like', '%' . $search . '%')
-            ->orWhere('nowa_customer', 'like', '%' . $search . '%')
-            ->paginate(10, ['*'], 'page', $page);
+            ->where('status_customer', true);
+        if ($search != '') {
+            $getCustomer->where('nama_customer', 'like', '%' . $search . '%')
+                ->orWhere('nowa_customer', 'like', '%' . $search . '%');
+        }
+        $getCustomer = $getCustomer->paginate(10, ['*'], 'page', $page);
 
         $output = [];
         $output[] = [
@@ -79,10 +85,12 @@ class SelectSearchController extends Controller
 
         // count filtered
         $countFiltered = Customer::dataTable()
-            ->where('status_customer', true)
-            ->where('nama_customer', 'like', '%' . $search . '%')
-            ->orWhere('nowa_customer', 'like', '%' . $search . '%')
-            ->count();
+            ->where('status_customer', true);
+        if ($search != '') {
+            $countFiltered->where('nama_customer', 'like', '%' . $search . '%')
+                ->orWhere('nowa_customer', 'like', '%' . $search . '%');
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -117,11 +125,13 @@ class SelectSearchController extends Controller
             $getBarang = $getBarang->where('cabang_id', $cabang_id);
         }
 
-        $getBarang = $getBarang->where(function ($query) use ($search) {
-            $query->where('barcode_barang', 'like', '%' . $search . '%')
-                ->orWhere('nama_barang', 'like', '%' . $search . '%');
-        })
-            ->paginate(10, ['*'], 'page', $page);
+        if ($search != '') {
+            $getBarang = $getBarang->where(function ($query) use ($search) {
+                $query->where('barcode_barang', 'like', '%' . $search . '%')
+                    ->orWhere('nama_barang', 'like', '%' . $search . '%');
+            });
+        }
+        $getBarang = $getBarang->paginate(10, ['*'], 'page', $page);
 
         $output[] = [
             'id' => '-',
@@ -143,11 +153,13 @@ class SelectSearchController extends Controller
         if ($cabang_id != null) {
             $countFiltered = $countFiltered->where('cabang_id', $cabang_id);
         }
-        $countFiltered = $countFiltered->where(function ($query) use ($search) {
-            $query->where('barcode_barang', 'like', '%' . $search . '%')
-                ->orWhere('nama_barang', 'like', '%' . $search . '%');
-        })
-            ->count();
+        if ($search != '') {
+            $countFiltered = $countFiltered->where(function ($query) use ($search) {
+                $query->where('barcode_barang', 'like', '%' . $search . '%')
+                    ->orWhere('nama_barang', 'like', '%' . $search . '%');
+            });
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -161,9 +173,11 @@ class SelectSearchController extends Controller
         $page = $request->input('page');
 
         $getKategoriPembayaran = KategoriPembayaran::dataTable()
-            ->where('status_kpembayaran', true)
-            ->where('nama_kpembayaran', 'like', '%' . $search . '%')
-            ->paginate(10, ['*'], 'page', $page);
+            ->where('status_kpembayaran', true);
+        if ($search != '') {
+            $getKategoriPembayaran->where('nama_kpembayaran', 'like', '%' . $search . '%');
+        }
+        $getKategoriPembayaran = $getKategoriPembayaran->paginate(10, ['*'], 'page', $page);
 
         $output = [];
         foreach ($getKategoriPembayaran as $key => $item) {
@@ -175,9 +189,11 @@ class SelectSearchController extends Controller
 
         // count filtered
         $countFiltered = kategoriPembayaran::dataTable()
-            ->where('status_kpembayaran', true)
-            ->where('nama_kpembayaran', 'like', '%' . $search . '%')
-            ->count();
+            ->where('status_kpembayaran', true);
+        if ($search != '') {
+            $countFiltered->where('nama_kpembayaran', 'like', '%' . $search . '%');
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -191,10 +207,12 @@ class SelectSearchController extends Controller
         $page = $request->input('page');
 
         $getSupplier = Supplier::dataTable()
-            ->where('status_supplier', true)
-            ->where('nama_supplier', 'like', '%' . $search . '%')
-            ->orWhere('nowa_supplier', 'like', '%' . $search . '%')
-            ->paginate(10, ['*'], 'page', $page);
+            ->where('status_supplier', true);
+        if ($search != '') {
+            $getSupplier->where('nama_supplier', 'like', '%' . $search . '%')
+                ->orWhere('nowa_supplier', 'like', '%' . $search . '%');
+        }
+        $getSupplier = $getSupplier->paginate(10, ['*'], 'page', $page);
 
         $output[] = [
             'id' => '-',
@@ -212,10 +230,12 @@ class SelectSearchController extends Controller
 
         // count filtered
         $countFiltered = Supplier::dataTable()
-            ->where('status_supplier', true)
-            ->where('nama_supplier', 'like', '%' . $search . '%')
-            ->orWhere('nowa_supplier', 'like', '%' . $search . '%')
-            ->count();
+            ->where('status_supplier', true);
+        if ($search != '') {
+            $countFiltered->where('nama_supplier', 'like', '%' . $search . '%')
+                ->orWhere('nowa_supplier', 'like', '%' . $search . '%');
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -229,9 +249,11 @@ class SelectSearchController extends Controller
         $page = $request->input('page');
 
         $getHargaServis = HargaServis::dataTable()
-            ->where('status_hargaservis', true)
-            ->where('nama_hargaservis', 'like', '%' . $search . '%')
-            ->paginate(10, ['*'], 'page', $page);
+            ->where('status_hargaservis', true);
+        if ($search != '') {
+            $getHargaServis->where('nama_hargaservis', 'like', '%' . $search . '%');
+        }
+        $getHargaServis = $getHargaServis->paginate(10, ['*'], 'page', $page);
 
         $output = [];
         foreach ($getHargaServis as $key => $item) {
@@ -246,9 +268,11 @@ class SelectSearchController extends Controller
 
         // count filtered
         $countFiltered = HargaServis::dataTable()
-            ->where('status_hargaservis', true)
-            ->where('nama_hargaservis', 'like', '%' . $search . '%')
-            ->count();
+            ->where('status_hargaservis', true);
+        if ($search != '') {
+            $countFiltered->where('nama_hargaservis', 'like', '%' . $search . '%');
+        }
+        $countFiltered = $countFiltered->count();
 
         return response()->json([
             'results' => $output,
@@ -265,12 +289,14 @@ class SelectSearchController extends Controller
         $getUsers = User::dataTable()->with('profile')
             ->whereHas('roles', function ($query) use ($role) {
                 $query->where('name', 'like', '%' . $role . '%');
-            })
-            ->whereHas('profile', function ($query) use ($search) {
+            });
+        if ($search != '') {
+            $getUsers->whereHas('profile', function ($query) use ($search) {
                 $query->where('nama_profile', 'like', '%' . $search . '%')
                     ->orWhere('nohp_profile', 'like', '%' . $search . '%');
-            })
-            ->where('status_users', true)
+            });
+        }
+        $getUsers = $getUsers->where('status_users', true)
             ->paginate(10, ['*'], 'page', $page);
 
         $output[] = [
@@ -291,12 +317,15 @@ class SelectSearchController extends Controller
         $countFiltered = User::dataTable()
             ->whereHas('roles', function ($query) use ($role) {
                 $query->where('name', 'like', '%' . $role . '%');
-            })
-            ->whereHas('profile', function ($query) use ($search) {
+            });
+        if ($search != '') {
+            $countFiltered->whereHas('profile', function ($query) use ($search) {
                 $query->where('nama_profile', 'like', '%' . $search . '%')
                     ->orWhere('nohp_profile', 'like', '%' . $search . '%');
-            })
-            ->where('status_users', true)
+            });
+        }
+
+        $countFiltered = $countFiltered->where('status_users', true)
             ->count();
 
         return response()->json([

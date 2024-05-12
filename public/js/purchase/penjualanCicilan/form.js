@@ -518,7 +518,6 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
-                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.nama_pemilik_kartu === "" ||
                     value.nomor_kartu === "" ||
@@ -533,7 +532,6 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
-                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     totalHargaItems == 0
@@ -658,7 +656,7 @@ $(document).ready(function () {
                 (item) => item.id == jsonDefaultUser
             );
             // user
-            let defaultUser = {};
+            let defaultUser = undefined;
             if (getDefaultUser !== -1) {
                 defaultUser = jsonDataUser[getDefaultUser];
             }
@@ -666,7 +664,7 @@ $(document).ready(function () {
             dataMetodePembayaran.kategori_pembayaran_selected =
                 getKategoriPembayaran;
             dataMetodePembayaran.sub_pembayaran = getSubPembayaran;
-            dataMetodePembayaran.sub_pembayaran_selected = {};
+            dataMetodePembayaran.sub_pembayaran_selected = undefined;
             dataMetodePembayaran.user = jsonDataUser;
             dataMetodePembayaran.user_selected = defaultUser;
             dataMetodePembayaran.bayar = 0;

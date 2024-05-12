@@ -8,7 +8,7 @@
     <link rel="icon" type="image/x-icon"
         href="{{ asset('backend/sneat-bootstrap-html-admin-template-free') }}/assets/img/favicon/favicon.ico" />
     <link rel="stylesheet" href="{{ asset('library/fontawesome-free-6.5.1-web/css/all.css') }}">
-    <title>Transfer Stok Keluar</title>
+    <title>Transfer Stok Masuk</title>
 
     <style>
         * {

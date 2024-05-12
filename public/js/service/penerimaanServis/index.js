@@ -16,6 +16,11 @@ $(document).ready(function () {
                     className: "text-center",
                 },
                 {
+                    data: "created_at",
+                    name: "created_at",
+                    searchable: true,
+                },
+                {
                     data: "noantrian_pservis",
                     name: "noantrian_pservis",
                     searchable: true,

@@ -30,7 +30,8 @@ class PenerimaanServis extends Model
     public function scopeDataTable()
     {
         $data = PenerimaanServis::with('kendaraan', 'kendaraan.customer', 'kategoriServis', 'pembayaranServis')
-            ->where('cabang_id', session()->get('cabang_id'));
+            ->where('penerimaan_servis.cabang_id', session()->get('cabang_id'))
+            ->orderBy('id', 'desc');
         return $data;
     }
 

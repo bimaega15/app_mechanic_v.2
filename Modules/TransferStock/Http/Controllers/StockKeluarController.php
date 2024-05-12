@@ -21,7 +21,7 @@ class StockKeluarController extends Controller
         if ($request->ajax()) {
             $transferKeluar = new TransferStock();
             $data = $transferKeluar->getTransferStock()
-                ->where('cabang_id_awal', session()->get('cabang_id'));
+                ->orWhere('cabang_id_awal', session()->get('cabang_id'));
 
             return DataTables::eloquent($data)
 
@@ -79,7 +79,9 @@ class StockKeluarController extends Controller
     public function show($id)
     {
         $transferKeluar = new TransferStock();
-        $row = $transferKeluar->getTransferStock()->find($id);
+        $row = $transferKeluar->getTransferStock()
+            ->orWhere('cabang_id_awal', session()->get('cabang_id'))
+            ->find($id);
 
         return view('transferstock::stokKeluar.detail', compact('row'));
     }
@@ -87,7 +89,9 @@ class StockKeluarController extends Controller
     public function print($id)
     {
         $transferKeluar = new TransferStock();
-        $row = $transferKeluar->getTransferStock()->find($id);
+        $row = $transferKeluar->getTransferStock()
+            ->orWhere('cabang_id_awal', session()->get('cabang_id'))
+            ->find($id);
 
         return view('transferstock::stokKeluar.print', compact('row'));
     }
@@ -122,35 +126,40 @@ class StockKeluarController extends Controller
     {
         //
         $getTransferStock = new TransferStock();
-        $data = $getTransferStock->getTransferStock()->find($id);
+        $data = $getTransferStock->getTransferStock()
+            ->orWhere('cabang_id_awal', session()->get('cabang_id'))
+            ->find($id);
+        $status_tstock = $data->status_tstock;
 
         // rollback stok
-        $cabang_id_penerima = $data->cabang_id_penerima;
-        $cabang_id_awal = $data->cabang_id_awal;
+        if ($status_tstock == 'diterima') {
+            $cabang_id_penerima = $data->cabang_id_penerima;
+            $cabang_id_awal = $data->cabang_id_awal;
 
-        foreach ($data->transferDetail as $key => $item) {
-            $barang_id = $item->barang_id;
-            $qty = $item->qty_tdetail;
+            foreach ($data->transferDetail as $key => $item) {
+                $barang_id = $item->barang_id;
+                $qty = $item->qty_tdetail;
 
-            $getBarang = Barang::where('id', $barang_id)->first();
-            $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                ->where('cabang_id', $cabang_id_penerima)
-                ->first();
+                $getBarang = Barang::where('id', $barang_id)->first();
+                $getBarangCabangPenerima = Barang::where('barcode_barang', $getBarang->barcode_barang)
+                    ->where('cabang_id', $cabang_id_penerima)
+                    ->first();
 
-            if ($getBarangCabangPenerima) {
-                $getBarangCabangPenerima->update([
-                    'stok_barang' => $getBarangCabangPenerima->stok_barang - $qty,
-                ]);
-            }
+                if ($getBarangCabangPenerima) {
+                    $getBarangCabangPenerima->update([
+                        'stok_barang' => $getBarangCabangPenerima->stok_barang - $qty,
+                    ]);
+                }
 
-            $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
-                ->where('cabang_id', $cabang_id_awal)
-                ->first();
+                $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
+                    ->where('cabang_id', $cabang_id_awal)
+                    ->first();
 
-            if ($getBarangCabangPemberi) {
-                $getBarangCabangPemberi->update([
-                    'stok_barang' => $getBarangCabangPemberi->stok_barang + $qty,
-                ]);
+                if ($getBarangCabangPemberi) {
+                    $getBarangCabangPemberi->update([
+                        'stok_barang' => $getBarangCabangPemberi->stok_barang + $qty,
+                    ]);
+                }
             }
         }
 
@@ -164,9 +173,10 @@ class StockKeluarController extends Controller
 
         $getTransferStock = new TransferStock();
         $data = $getTransferStock->getTransferStock()
+            ->orWhere('cabang_id_awal', session()->get('cabang_id'))
             ->find($id);
         $statusAllowed = ['proses kirim'];
-        
+
         if (in_array($data->status_tstock, $statusAllowed)) {
             return response()->json([
                 'status' => 200,

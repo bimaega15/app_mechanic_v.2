@@ -39,6 +39,9 @@ class PenerimaanServisController extends Controller
         if ($request->ajax()) {
             $data = PenerimaanServis::dataTable()->where('status_pservis', 'antrian servis masuk');
             return DataTables::eloquent($data)
+                ->addColumn('created_at', function ($row) {
+                    return UtilsHelper::tanggalBulanTahunKonversi($row->created_at);
+                })
                 ->addColumn('action', function ($row) {
                     $buttonAksi = '
                     <button type="button" 

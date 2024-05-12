@@ -33,7 +33,7 @@ class ProfitPribadiController extends Controller
                 $dataServis = $dataServis->whereDate('penerimaan_servis.updated_at', '<=', $sampai_tanggal);
             }
             if (Auth::id() != null) {
-                $dataServis = $dataServis->where('order_servis.users_id_mekanik', '=', Auth::id());
+                $dataServis = $dataServis->orWhere('order_servis.users_id_mekanik', '=', Auth::id());
             }
 
             return DataTables::eloquent($dataServis)

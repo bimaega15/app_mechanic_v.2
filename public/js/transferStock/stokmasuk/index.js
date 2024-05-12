@@ -60,7 +60,7 @@ $(document).ready(function () {
     const renderPrint = (id) => {
         var output = "";
         $.ajax({
-            url: `${urlRoot}/transferStock/keluar/${id}/print`,
+            url: `${urlRoot}/transferStock/masuk/${id}/print`,
             type: "get",
             dataType: "text",
             async: false,

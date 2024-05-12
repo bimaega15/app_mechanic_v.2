@@ -32,7 +32,9 @@
                                     </div>
                                     <div class="col-lg-4">
                                         <div style="margin-top: 29px;">
-                                            <x-button-submit-modal />
+                                            @if (!in_array($row->status_tstock, $status_tstock_data))
+                                                <x-button-submit-modal />
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

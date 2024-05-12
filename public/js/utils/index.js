@@ -92,7 +92,7 @@ function basicDeleteConfirmDatatable({
     urlDelete = "",
     data = {},
     text = "",
-    dataFunction = () => {},
+    dataFunction = () => { },
     isRenderView = false,
 }) {
     var text = text ? text : "Benar ingin menghapus data ini?";
@@ -118,8 +118,8 @@ function basicDeleteConfirmDatatable({
                         title: "Successfully",
                         description: data,
                     });
-                    
-                    if(!isRenderView){
+
+                    if (!isRenderView) {
                         datatable.ajax.reload();
                     } else {
                         dataFunction();
@@ -533,6 +533,12 @@ const formatDateIndonesia = (dateString) => {
     const formattedDate = date.toLocaleDateString("id-ID", options);
     return formattedDate;
 };
+const formatDateIndonesiaCreatedAt = () => {
+    const date = new Date();
+    const options = { day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric" };
+    const formattedDate = date.toLocaleDateString("id-ID", options);
+    return formattedDate;
+};
 
 const datepickerDdMmYyyy = (element) => {
     $(element).datepicker({
@@ -540,6 +546,7 @@ const datepickerDdMmYyyy = (element) => {
         todayButton: true,
         highlight: true,
         autoclose: true,
+        orientation: 'bottom'
     });
 };
 

@@ -9,7 +9,7 @@
                     <x-form-input-horizontal label="Username" name="username" placeholder="Username..."
                         value="{{ isset($row) ? $row->username ?? '' : '' }}" />
 
-                    <x-form-input-horizontal label="No. HP" name="nohp_profile" placeholder="No. Handphone..."
+                    <x-form-input-horizontal type="number" label="No. HP" name="nohp_profile" placeholder="No. Handphone..."
                         value="{{ isset($row) ? $row->profile->nohp_profile ?? '' : '' }}" />
 
                     <x-form-textarea-horizontal label="Alamat" name="alamat_profile" placeholder="Alamat..."
@@ -18,8 +18,7 @@
                     <x-form-radio-horizontal label="Jenis Kelamin" name="jeniskelamin_profile"
                         value="{{ isset($row) ? ($row->profile->jeniskelamin_profile === 'Laki-laki' ? 'L' : 'P' ?? '') : '' }}" />
 
-                    <x-form-select-horizontal label="Cabang" name="cabang_id"
-                        value="{{ isset($row) ? $row->cabang_id ?? '' : '' }}" :data="$array_cabang" />
+                    <input type="hidden" name="cabang_id" value="{{ session()->get('cabang_id') }}">
                 </div>
                 <div class="col-lg-6">
                     <x-form-select-horizontal label="Level" name="roles_id" :data="$array_role"

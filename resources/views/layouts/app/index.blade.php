@@ -149,9 +149,11 @@
             }
         });
     </script>
+    <script class="baseurl" data-value="{{ url('/') }}"></script>
     <script>
         $(document).ready(function() {
-            $('.btn-change-cabang').on('click', function() {
+            $('.btn-change-cabang').on('click', function(e) {
+                e.preventDefault();
                 showModal({
                     url: $(this).data("urlcreate"),
                     modalId: $(this).data("typemodal"),

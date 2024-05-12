@@ -114,16 +114,14 @@ $(document).ready(function () {
                     </span>
                 </td>
                 <td>
-                    <select name="type_discount" class="form-select" data-id="${
-                        value.id
-                    }">
+                    <select name="type_discount" class="form-select" data-id="${value.id
+                }">
                         <option value="" selected>Tipe Diskon</option>`;
 
             Object.keys(jsonTipeDiskon).map((v, i) => {
                 output += `
-                <option value="${v}" ${
-                    value.tipeDiskon == v ? "selected" : ""
-                }>${jsonTipeDiskon[v]}</option>
+                <option value="${v}" ${value.tipeDiskon == v ? "selected" : ""
+                    }>${jsonTipeDiskon[v]}</option>
                 `;
             });
 
@@ -144,9 +142,8 @@ $(document).ready(function () {
                     </span>
                 </td>
                 <td>
-                    <button class="btn btn-delete" title="Hapus item" data-id="${
-                        value.id
-                    }">
+                    <button class="btn btn-delete" title="Hapus item" data-id="${value.id
+                }">
                         <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i
                     </button>
                 </td>
@@ -178,7 +175,8 @@ $(document).ready(function () {
     };
 
     const changeHandleInput = (id) => {
-        const qty = removeCommas($(`input[name="qty"][data-id="${id}"]`).val());
+        let qty = removeCommas($(`input[name="qty"][data-id="${id}"]`).val());
+        qty = qty != '' ? parseInt(qty, 10) : 0;
         const searchOrderItems = orderItems.findIndex((item) => item.id == id);
         const getTypeDiscount = $(
             `select[name="type_discount"][data-id="${id}"] option:selected`
@@ -248,11 +246,10 @@ $(document).ready(function () {
 
                 value.kategori_pembayaran.map((v, i) => {
                     output += `
-                        <option value="${v.id}" ${
-                        v.id === value.kategori_pembayaran_selected.id
+                        <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                             ? "selected"
                             : ""
-                    }>${v.nama_kpembayaran}</option>
+                        }>${v.nama_kpembayaran}</option>
                     `;
                 });
 
@@ -274,13 +271,12 @@ $(document).ready(function () {
 
                 value.sub_pembayaran.map((v, i) => {
                     output += `
-                    <option value="${v.id}" ${
-                        v.id ==
-                        (value.sub_pembayaran_selected &&
-                            value.sub_pembayaran_selected.id)
+                    <option value="${v.id}" ${v.id ==
+                            (value.sub_pembayaran_selected &&
+                                value.sub_pembayaran_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.nama_spembayaran}</option>
+                        }>${v.nama_spembayaran}</option>
                     `;
                 });
 
@@ -294,22 +290,21 @@ $(document).ready(function () {
                             <input class="form-control" type="text" name="bayar" data-index="${index}"
                                 placeholder="Masukan nominal pembayaran..." 
                                 value="${number_format(
-                                    value.bayar,
-                                    0,
-                                    ".",
-                                    ","
-                                )}">
+                    value.bayar,
+                    0,
+                    ".",
+                    ","
+                )}">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                             <label for="">Dibayar Oleh</label>
                             <input class="form-control" type="text" name="dibayar_oleh" data-index="${index}"
-                                placeholder="Dibayarkan oleh..." value="${
-                                    value.dibayarkan_oleh !== undefined
-                                        ? value.dibayarkan_oleh
-                                        : ""
-                                }">
+                                placeholder="Dibayarkan oleh..." value="${value.dibayarkan_oleh !== undefined
+                        ? value.dibayarkan_oleh
+                        : ""
+                    }">
                         </div>
                     </div>
                 </div>
@@ -323,11 +318,10 @@ $(document).ready(function () {
 
                 value.user.map((v, i) => {
                     output += `
-                    <option value="${v.id}" ${
-                        v.id === (value.user_selected && value.user_selected.id)
+                    <option value="${v.id}" ${v.id === (value.user_selected && value.user_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.name}</option>
+                        }>${v.name}</option>
                     `;
                 });
 
@@ -371,11 +365,10 @@ $(document).ready(function () {
                                 <option value="">-- Kategori Pembayaran --</option>`;
                 value.kategori_pembayaran.map((v, i) => {
                     output += `
-                                        <option value="${v.id}" ${
-                        v.id === value.kategori_pembayaran_selected.id
+                                        <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                             ? "selected"
                             : ""
-                    }>${v.nama_kpembayaran}</option>
+                        }>${v.nama_kpembayaran}</option>
                                     `;
                 });
 
@@ -398,13 +391,12 @@ $(document).ready(function () {
 
                 value.sub_pembayaran.map((v, i) => {
                     output += `
-                                    <option value="${v.id}" ${
-                        v.id ==
-                        (value.sub_pembayaran_selected &&
-                            value.sub_pembayaran_selected.id)
+                                    <option value="${v.id}" ${v.id ==
+                            (value.sub_pembayaran_selected &&
+                                value.sub_pembayaran_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.nama_spembayaran}</option>
+                        }>${v.nama_spembayaran}</option>
                                     `;
                 });
 
@@ -416,11 +408,10 @@ $(document).ready(function () {
                         <div class="form-group">
                             <label for="">Nomor Kartu</label>
                             <input class="form-control" type="text" name="nomor_kartu" data-index="${index}"
-                                placeholder="Masukan Nomor Kartu..." value="${
-                                    value.nomor_kartu !== undefined
-                                        ? value.nomor_kartu
-                                        : ""
-                                }">
+                                placeholder="Masukan Nomor Kartu..." value="${value.nomor_kartu !== undefined
+                        ? value.nomor_kartu
+                        : ""
+                    }">
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -428,11 +419,10 @@ $(document).ready(function () {
                             <label for="">Nama Pemilik Kartu</label>
                             <input class="form-control" type="text" name="nama_pemilik_kartu" 
                             data-index="${index}"
-                                placeholder="Pemilik Kartu..." value="${
-                                    value.nama_pemilik_kartu !== undefined
-                                        ? value.nama_pemilik_kartu
-                                        : ""
-                                }">
+                                placeholder="Pemilik Kartu..." value="${value.nama_pemilik_kartu !== undefined
+                        ? value.nama_pemilik_kartu
+                        : ""
+                    }">
                         </div>
                     </div>
                 </div>
@@ -448,11 +438,10 @@ $(document).ready(function () {
 
                 value.user.map((v, i) => {
                     output += `
-                                    <option value="${v.id}" ${
-                        v.id === (value.user_selected && value.user_selected.id)
+                                    <option value="${v.id}" ${v.id === (value.user_selected && value.user_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.name}</option>
+                        }>${v.name}</option>
                                     `;
                 });
 
@@ -477,11 +466,11 @@ $(document).ready(function () {
                             <label for="">Hutang</label>
                             <input class="form-control" type="text" name="hutang" data-index="${index}" placeholder="Hutang..." 
                             value="${number_format(
-                                value.hutang,
-                                0,
-                                ".",
-                                ","
-                            )}" disabled>
+                    value.hutang,
+                    0,
+                    ".",
+                    ","
+                )}" disabled>
                         </div>
                     </div>
                 </div>
@@ -526,10 +515,10 @@ $(document).ready(function () {
             ).val(value.kategori_pembayaran_selected.id);
             $(`select[name="sub_pembayaran_id_mp"][data-index="${index}"]`).val(
                 value.sub_pembayaran_selected &&
-                    value.sub_pembayaran_selected.id
+                value.sub_pembayaran_selected.id
             );
             $(`input[name="bayar"][data-index="${index}"]`).val(
-                formatNumber(value.bayar)
+                formatNumber(parseInt(value.bayar, 10))
             );
             $(`input[name="dibayar_oleh"][data-index="${index}"]`).val(
                 value.dibayarkan_oleh
@@ -681,7 +670,6 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
-                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.nama_pemilik_kartu === "" ||
                     value.nomor_kartu === "" ||
@@ -697,7 +685,6 @@ $(document).ready(function () {
                     value.kategori_pembayaran_selected === undefined ||
                     value.sub_pembayaran_selected === undefined ||
                     value.bayar === "" ||
-                    value.bayar === 0 ||
                     value.user_selected === undefined ||
                     value.dibayarkan_oleh === "" ||
                     orderItems.length == 0 ||
@@ -710,7 +697,7 @@ $(document).ready(function () {
             }
         });
         buttonDisabled = buttonDisabledTidakLangsung || buttonDisabledLangsung;
-        if(metodePembayaran.length === 0){
+        if (metodePembayaran.length === 0) {
             buttonDisabled = true;
         }
         $(".btn-bayar").attr("disabled", buttonDisabled);
@@ -804,7 +791,7 @@ $(document).ready(function () {
                     ) {
                         return sum + current.totalHarga;
                     },
-                    0);
+                        0);
 
                     renderViewKasir();
 
@@ -996,7 +983,7 @@ $(document).ready(function () {
                 (item) => item.id == jsonDefaultUser
             );
             // user
-            let defaultUser = {};
+            let defaultUser = undefined;
             if (getDefaultUser !== -1) {
                 defaultUser = jsonDataUser[getDefaultUser];
             }
@@ -1013,7 +1000,7 @@ $(document).ready(function () {
             dataMetodePembayaran.kategori_pembayaran_selected =
                 getKategoriPembayaran;
             dataMetodePembayaran.sub_pembayaran = getSubPembayaran;
-            dataMetodePembayaran.sub_pembayaran_selected = {};
+            dataMetodePembayaran.sub_pembayaran_selected = undefined;
             dataMetodePembayaran.user = jsonDataUser;
             dataMetodePembayaran.user_selected = defaultUser;
             dataMetodePembayaran.customer = getCustomer;

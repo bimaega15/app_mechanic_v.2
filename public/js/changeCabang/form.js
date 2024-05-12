@@ -28,7 +28,8 @@ function submitData() {
                 description: data,
                 type: "bg-success",
             });
-            window.location.reload();
+            const baseurl = $('.baseurl').data('value');
+            window.location.href = `${baseurl}/dashboard`;
         },
         error: function (jqXHR, exception) {
             $("#btn-submit").attr("disabled", false);

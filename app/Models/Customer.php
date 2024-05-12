@@ -15,7 +15,7 @@ class Customer extends Model
 
     public function scopeDataTable($query)
     {
-        return $query->where('cabang_id', session()->get('cabang_id'));
+        return $query;
     }
 
     public function kendaraan()
@@ -65,8 +65,7 @@ class Customer extends Model
             'penjualan.penjualanCicilan.users',
             'penjualan.penjualanCicilan.users.profile',
         )
-            ->withCount(['penjualan', 'penerimaanServis'])
-            ->where('cabang_id', session()->get('cabang_id'));
+            ->withCount(['penjualan', 'penerimaanServis']);
     }
 
     public function penerimaanServis()

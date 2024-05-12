@@ -4,7 +4,7 @@ const showModal = ({
     title = "",
     type = "",
     modalId = "",
-    renderData = () => {},
+    renderData = () => { },
 }) => {
     $.ajax({
         url: url,

@@ -631,6 +631,7 @@ class UtilsHelper
             'is_deposit' => $row->isdp_pservis,
             'getPembayaranServis' => json_encode(UtilsHelper::paymentStatisPenerimaanServis($penerimaanServisId)),
             'pesanwa_berkala' => $pesanwa_berkala,
+            'created_app' => UtilsHelper::createdApp(),
         ];
         return $data;
     }

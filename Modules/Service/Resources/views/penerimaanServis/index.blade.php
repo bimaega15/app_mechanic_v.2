@@ -29,6 +29,7 @@
                     <thead>
                         <tr>
                             <th>No.</th>
+                            <th>Tanggal</th>
                             <th>No. Antrian</th>
                             <th>Customer</th>
                             <th>No. Pol</th>
