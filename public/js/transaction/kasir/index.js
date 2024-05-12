@@ -107,7 +107,7 @@ $(document).ready(function () {
                 <td>
                     <input name="qty" type="text" class="form-control"  
                     title="Stock: ${value.stok_barang} barang" 
-                    value="${removeZeroAtFront(jumlah_deposit)}" data-id="${value.id}" />
+                    value="${removeZeroAtFront(value.qty)}" data-id="${value.id}" />
                 </td>
                 <td>
                     <span class="hargajual_barang" data-id="${value.id}">
