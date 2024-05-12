@@ -107,11 +107,10 @@ $(document).ready(function () {
                                 <option value="">-- Kategori Pembayaran --</option>`;
                 value.kategori_pembayaran.map((v, i) => {
                     output += `
-                        <option value="${v.id}" ${
-                        v.id === value.kategori_pembayaran_selected.id
+                        <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                             ? "selected"
                             : ""
-                    }>${v.nama_kpembayaran}</option>
+                        }>${v.nama_kpembayaran}</option>
                     `;
                 });
                 output += `
@@ -131,13 +130,12 @@ $(document).ready(function () {
                                 <option value="">-- Sub Pembayaran --</option>`;
                 value.sub_pembayaran.map((v, i) => {
                     output += `
-                    <option value="${v.id}" ${
-                        v.id ==
-                        (value.sub_pembayaran_selected &&
-                            value.sub_pembayaran_selected.id)
+                    <option value="${v.id}" ${v.id ==
+                            (value.sub_pembayaran_selected &&
+                                value.sub_pembayaran_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.nama_spembayaran}</option>
+                        }>${v.nama_spembayaran}</option>
                     `;
                 });
                 output += `
@@ -152,11 +150,11 @@ $(document).ready(function () {
                                     <input class="form-control" type="text" name="jumlah_deposit" data-index="${index}"
                                         placeholder="Masukan Jumlah Deposit..."
                                         value="${number_format(
-                                            value.jumlah_deposit,
-                                            0,
-                                            ".",
-                                            ","
-                                        )}">
+                    value.jumlah_deposit,
+                    0,
+                    ".",
+                    ","
+                )}">
                                 </div>
                             </div>
                             <div class="col-lg-4">
@@ -165,22 +163,21 @@ $(document).ready(function () {
                                     <input class="form-control" type="text" name="bayar" data-index="${index}"
                                         placeholder="Masukan nominal pembayaran..."
                                         value="${number_format(
-                                            value.bayar,
-                                            0,
-                                            ".",
-                                            ","
-                                        )}">
+                    value.bayar,
+                    0,
+                    ".",
+                    ","
+                )}">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label for="">Dibayar Oleh</label>
                                     <input class="form-control" type="text" name="dibayar_oleh" data-index="${index}"
-                                        placeholder="Dibayarkan oleh..." value="${
-                                            value.dibayarkan_oleh !== undefined
-                                                ? value.dibayarkan_oleh
-                                                : ""
-                                        }">
+                                        placeholder="Dibayarkan oleh..." value="${value.dibayarkan_oleh !== undefined
+                        ? value.dibayarkan_oleh
+                        : ""
+                    }">
                                 </div>
                             </div>
                         </div>
@@ -195,11 +192,10 @@ $(document).ready(function () {
                                 <option value="">Akun Kasir</option>`;
                 value.user.map((v, i) => {
                     output += `
-                    <option value="${v.id}" ${
-                        v.id === (value.user_selected && value.user_selected.id)
+                    <option value="${v.id}" ${v.id === (value.user_selected && value.user_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.name}</option>
+                        }>${v.name}</option>
                     `;
                 });
                 output += `
@@ -242,11 +238,10 @@ $(document).ready(function () {
                                 <option value="">-- Kategori Pembayaran --</option>`;
                 value.kategori_pembayaran.map((v, i) => {
                     output += `
-                                        <option value="${v.id}" ${
-                        v.id === value.kategori_pembayaran_selected.id
+                                        <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
                             ? "selected"
                             : ""
-                    }>${v.nama_kpembayaran}</option>
+                        }>${v.nama_kpembayaran}</option>
                                     `;
                 });
                 output += `
@@ -267,13 +262,12 @@ $(document).ready(function () {
                                 <option value="">-- Sub Pembayaran --</option>`;
                 value.sub_pembayaran.map((v, i) => {
                     output += `
-                                    <option value="${v.id}" ${
-                        v.id ==
-                        (value.sub_pembayaran_selected &&
-                            value.sub_pembayaran_selected.id)
+                                    <option value="${v.id}" ${v.id ==
+                            (value.sub_pembayaran_selected &&
+                                value.sub_pembayaran_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.nama_spembayaran}</option>
+                        }>${v.nama_spembayaran}</option>
                                     `;
                 });
                 output += `
@@ -284,11 +278,10 @@ $(document).ready(function () {
                         <div class="form-group">
                             <label for="">Nomor Kartu</label>
                             <input class="form-control" type="text" name="nomor_kartu" data-index="${index}"
-                                placeholder="Masukan Nomor Kartu..." value="${
-                                    value.nomor_kartu !== undefined
-                                        ? value.nomor_kartu
-                                        : ""
-                                }">
+                                placeholder="Masukan Nomor Kartu..." value="${value.nomor_kartu !== undefined
+                        ? value.nomor_kartu
+                        : ""
+                    }">
                         </div>
                     </div>
                     <div class="col-lg-4">
@@ -296,11 +289,10 @@ $(document).ready(function () {
                             <label for="">Nama Pemilik Kartu</label>
                             <input class="form-control" type="text" name="nama_pemilik_kartu"
                             data-index="${index}"
-                                placeholder="Pemilik Kartu..." value="${
-                                    value.nama_pemilik_kartu !== undefined
-                                        ? value.nama_pemilik_kartu
-                                        : ""
-                                }">
+                                placeholder="Pemilik Kartu..." value="${value.nama_pemilik_kartu !== undefined
+                        ? value.nama_pemilik_kartu
+                        : ""
+                    }">
                         </div>
                     </div>
                 </div>
@@ -315,11 +307,10 @@ $(document).ready(function () {
                                 <option value="">Akun Kasir</option>`;
                 value.user.map((v, i) => {
                     output += `
-                                    <option value="${v.id}" ${
-                        v.id === (value.user_selected && value.user_selected.id)
+                                    <option value="${v.id}" ${v.id === (value.user_selected && value.user_selected.id)
                             ? "selected"
                             : ""
-                    }>${v.name}</option>
+                        }>${v.name}</option>
                                     `;
                 });
                 output += `
@@ -343,11 +334,11 @@ $(document).ready(function () {
                             <label for="">Hutang</label>
                             <input class="form-control" type="text" name="hutang" data-index="${index}" placeholder="Hutang..."
                             value="${number_format(
-                                value.hutang,
-                                0,
-                                ".",
-                                ","
-                            )}" disabled>
+                    value.hutang,
+                    0,
+                    ".",
+                    ","
+                )}" disabled>
                         </div>
                     </div>
                 </div>
@@ -367,7 +358,7 @@ $(document).ready(function () {
             ).val(value.kategori_pembayaran_selected.id);
             $(`select[name="sub_pembayaran_id_mp"][data-index="${index}"]`).val(
                 value.sub_pembayaran_selected &&
-                    value.sub_pembayaran_selected.id
+                value.sub_pembayaran_selected.id
             );
             $(`input[name="jumlah_deposit"][data-index="${index}"]`).val(
                 formatNumber(value.jumlah_deposit)
@@ -414,8 +405,8 @@ $(document).ready(function () {
             jumlah_deposit == null
                 ? 0
                 : isNaN(jumlah_deposit)
-                ? 0
-                : jumlah_deposit;
+                    ? 0
+                    : jumlah_deposit;
 
         let bayar = $(`input[name="bayar"][data-index="${index}"]`).val();
         bayar = removeCommas(bayar);
@@ -451,8 +442,8 @@ $(document).ready(function () {
         metodePembayaran[index].kategori_pembayaran_selected =
             getKategoriPembayaran;
         metodePembayaran[index].sub_pembayaran_selected = getSubPembayaran;
-        metodePembayaran[index].bayar = bayar;
-        metodePembayaran[index].jumlah_deposit = jumlah_deposit;
+        metodePembayaran[index].bayar = removeZeroAtFront(bayar);
+        metodePembayaran[index].jumlah_deposit = removeZeroAtFront(jumlah_deposit);
         metodePembayaran[index].dibayarkan_oleh = dibayar_oleh;
         metodePembayaran[index].user_selected = getUsers;
         metodePembayaran[index].kembalian = kembalian;
@@ -479,8 +470,8 @@ $(document).ready(function () {
                 (item.bayar == ""
                     ? 0
                     : isNaN(item.bayar)
-                    ? 0
-                    : parseFloat(item.bayar))
+                        ? 0
+                        : parseFloat(item.bayar))
             );
         }, 0);
         sumDeposit = metodePembayaran.reduce((total, item) => {
@@ -490,9 +481,9 @@ $(document).ready(function () {
         metodePembayaran.map((value, index) => {
             if (
                 value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
-                    "langsung" &&
+                "langsung" &&
                 value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
-                    "deposit"
+                "deposit"
             ) {
                 if (
                     value.kategori_pembayaran_selected === undefined ||
@@ -547,7 +538,7 @@ $(document).ready(function () {
             buttonDisabledLangsung ||
             buttonDisabledDeposit;
 
-        if(metodePembayaran.length === 0){
+        if (metodePembayaran.length === 0) {
             buttonDisabled = true;
         }
         $(".btn-bayar").attr("disabled", buttonDisabled);
@@ -709,7 +700,7 @@ $(document).ready(function () {
     };
 
     const initialAwal = () => {
-        if($('input[name="isdp_pservis"]').is(':checked')){
+        if ($('input[name="isdp_pservis"]').is(':checked')) {
             $('.area-pembayaran').removeClass('d-none');
         } else {
             $('.area-pembayaran').addClass('d-none');
@@ -850,8 +841,8 @@ $(document).ready(function () {
     // end benar
 
     body.off("input", 'input[name="isestimasi_pservis"]');
-    body.on('click', 'input[name="isestimasi_pservis"]', function () {        
-        if($(this).is(":checked")){
+    body.on('click', 'input[name="isestimasi_pservis"]', function () {
+        if ($(this).is(":checked")) {
             $('.area_estimasi').removeClass('d-none');
         } else {
             $('.area_estimasi').addClass('d-none');

@@ -568,3 +568,7 @@ const formatDatePayload = () => {
 
     return formattedDate;
 };
+
+const removeZeroAtFront = (nominal) => {
+    return nominal === '' ? 0 : parseInt(nominal, 10);
+}

@@ -574,7 +574,10 @@ class UtilsHelper
         $array_kategori_pembayaran = [];
         $kategoriPembayaran = KategoriPembayaran::dataTable()->where('status_kpembayaran', true)
             ->get();
-        foreach ($kategoriPembayaran as $value => $item) {
+        $filteredPembayaran = collect($kategoriPembayaran)->filter(function ($pembayaran) {
+            return strtolower($pembayaran['nama_kpembayaran']) !== 'deposit';
+        })->values();
+        foreach ($filteredPembayaran as $value => $item) {
             $array_kategori_pembayaran[] = [
                 'id' => $item->id,
                 'label' => $item->nama_kpembayaran

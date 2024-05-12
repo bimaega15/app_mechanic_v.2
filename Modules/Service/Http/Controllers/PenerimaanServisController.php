@@ -515,6 +515,40 @@ class PenerimaanServisController extends Controller
                     'cabang_id' => $saldo_detail['cabang_id'],
                 ]);
             }
+
+            // check if is with draw
+            foreach ($pembayaran_servis as $key => $item) {
+                $is_with_draw = $item['is_with_draw'];
+                if ($is_with_draw) {
+                    $deposit_pservis = $item['deposit_pservis'];
+
+                    $saldo_customer = $pengembalian_servis['saldo_customer'];
+                    $customer_id = $saldo_customer['customer_id'];
+                    $saldo_customer_model = SaldoCustomer::where('customer_id', $customer_id)->first();
+
+                    $jumlah_saldocustomer = intval($saldo_customer_model->jumlah_saldocustomer) - intval($deposit_pservis);
+
+                    if ($saldo_customer_model) {
+                        $saldo_customer_model->update([
+                            'customer_id' => $saldo_customer['customer_id'],
+                            'jumlah_saldocustomer' => $jumlah_saldocustomer,
+                            'cabang_id' => $saldo_customer['cabang_id'],
+                        ]);
+
+                        // saldo detail
+                        $saldo_detail = $pengembalian_servis['saldo_detail'];
+                        SaldoDetail::create([
+                            'saldo_customer_id' => $saldo_customer_model->id,
+                            'penerimaan_servis_id' => $item['penerimaan_servis_id'],
+                            'totalsaldo_detail' => $jumlah_saldocustomer,
+                            'kembaliansaldo_detail' => $jumlah_saldocustomer,
+                            'hutangsaldo_detail' => $jumlah_saldocustomer,
+                            'cabang_id' => $item['cabang_id'],
+                            'is_with_draw' => $is_with_draw,
+                        ]);
+                    }
+                }
+            }
         }
 
         $dataServis = $penerimaanServis->transaksiServis($id);

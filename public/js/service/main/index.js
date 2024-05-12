@@ -405,12 +405,11 @@ const viewMetodePembayaran = () => {
         </div>
         <hr style="color: #1381f0;" />
         `;
-        } else {
-            if (
-                value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
-                "deposit"
-            ) {
-                output += `
+        } else if (
+            value.kategori_pembayaran_selected.nama_kpembayaran.toLowerCase() !==
+            "deposit"
+        ) {
+            output += `
         <div class="row mt-3">
             <div class="col-lg-6">
                 <div class="form-group">
@@ -418,27 +417,27 @@ const viewMetodePembayaran = () => {
                     data-index="${index}"
                     name="kategori_pembayaran_id_mp" id="" class="form-control" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                         <option value="">-- Kategori Pembayaran --</option>`;
-                value.kategori_pembayaran.map((v, i) => {
-                    output += `
-                                <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
-                            ? "selected"
-                            : ""
-                        }>${v.nama_kpembayaran}</option>
-                            `;
-                });
+            value.kategori_pembayaran.map((v, i) => {
                 output += `
+                                <option value="${v.id}" ${v.id === value.kategori_pembayaran_selected.id
+                        ? "selected"
+                        : ""
+                    }>${v.nama_kpembayaran}</option>
+                            `;
+            });
+            output += `
                     </select>
                 </div>
             </div>
             <div class="col-lg-6">`;
-                if (!allowedPservis.includes(statusPservis)) {
-                    output += `
+            if (!allowedPservis.includes(statusPservis)) {
+                output += `
                 <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
                     <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
                 </button>
                 `;
-                }
-                output += `
+            }
+            output += `
             </div>
         </div>
         <div class="row mt-3">
@@ -447,17 +446,17 @@ const viewMetodePembayaran = () => {
                     <select name="sub_pembayaran_id_mp" data-index="${index}"
                     class="form-control" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                         <option value="">-- Sub Pembayaran --</option>`;
-                value.sub_pembayaran.map((v, i) => {
-                    output += `
-                            <option value="${v.id}" ${v.id ==
-                            (value.sub_pembayaran_selected &&
-                                value.sub_pembayaran_selected.id)
-                            ? "selected"
-                            : ""
-                        }>${v.nama_spembayaran}</option>
-                            `;
-                });
+            value.sub_pembayaran.map((v, i) => {
                 output += `
+                            <option value="${v.id}" ${v.id ==
+                        (value.sub_pembayaran_selected &&
+                            value.sub_pembayaran_selected.id)
+                        ? "selected"
+                        : ""
+                    }>${v.nama_spembayaran}</option>
+                            `;
+            });
+            output += `
                     </select>
                 </div>
             </div>
@@ -466,9 +465,9 @@ const viewMetodePembayaran = () => {
                     <label for="">Nomor Kartu</label>
                     <input class="form-control" type="text" name="nomor_kartu" data-index="${index}"
                         placeholder="Masukan Nomor Kartu..." value="${value.nomor_kartu !== undefined
-                        ? value.nomor_kartu
-                        : ""
-                    }">
+                    ? value.nomor_kartu
+                    : ""
+                }">
                 </div>
             </div>
             <div class="col-lg-4">
@@ -477,9 +476,9 @@ const viewMetodePembayaran = () => {
                     <input class="form-control" type="text" name="nama_pemilik_kartu"
                     data-index="${index}"
                         placeholder="Pemilik Kartu..." value="${value.nama_pemilik_kartu !== undefined
-                        ? value.nama_pemilik_kartu
-                        : ""
-                    }">
+                    ? value.nama_pemilik_kartu
+                    : ""
+                }">
                 </div>
             </div>
         </div>
@@ -492,16 +491,16 @@ const viewMetodePembayaran = () => {
                     class="form-control"
                     data-index="${index}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                         <option value="">Akun Kasir</option>`;
-                value.user.map((v, i) => {
-                    output += `
-                            <option value="${v.id}" ${v.id ===
-                            (value.user_selected && value.user_selected.id)
-                            ? "selected"
-                            : ""
-                        }>${v.name}</option>
-                            `;
-                });
+            value.user.map((v, i) => {
                 output += `
+                            <option value="${v.id}" ${v.id ===
+                        (value.user_selected && value.user_selected.id)
+                        ? "selected"
+                        : ""
+                    }>${v.name}</option>
+                            `;
+            });
+            output += `
                     </select>
                 </div>
             </div>
@@ -523,18 +522,18 @@ const viewMetodePembayaran = () => {
                     <label for="">Hutang</label>
                     <input class="form-control" type="text" name="hutang" data-index="${index}" placeholder="Hutang..."
                     value="${number_format(
-                    value.hutang,
-                    0,
-                    ".",
-                    ","
-                )}" disabled>
+                value.hutang,
+                0,
+                ".",
+                ","
+            )}" disabled>
                 </div>
             </div>
         </div>
         <hr style="color: #1381f0;" />
         `;
-            } else {
-                output += `
+        } else {
+            output += `
             <div class="row mb-3">
                 <div class="col-lg-4">
                     <div class="row">
@@ -543,15 +542,25 @@ const viewMetodePembayaran = () => {
                         </div>
                         <div class="col-lg-4">`;
 
-                if (!allowedPservis.includes(statusPservis)) {
-                    output += `
-                            <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
-                                <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
-                            </button>`;
-                }
+            if (!allowedPservis.includes(statusPservis)) {
+                // output += `
+                //             <button class="btn btn-delete-pembayaran" title="Hapus item" data-index="${index}">
+                //                 <i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>
+                //             </button>`;
+            }
 
 
-                output += `
+            output += `
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class=" col-lg-12">
+                            <div class="form-check">
+                                <input class="form-check-input checkbox_saldo_withdraw" type="checkbox" value="1" id="saldo_withdraw" ${value.isWithDraw ? 'checked' : ''} data-index="${index}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                                <label class="form-check-label" for="saldo_withdraw">
+                                    Tarik Sisa Saldo
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -561,24 +570,24 @@ const viewMetodePembayaran = () => {
                         <input class="form-control" type="text" name="saldo_deposit" data-index="${index}"
                             placeholder="Saldo Deposit..."
                             value="${number_format(
-                    value.saldo_deposit,
-                    0,
-                    ".",
-                    ","
-                )}" disabled>
+                value.saldo_deposit,
+                0,
+                ".",
+                ","
+            )}" disabled>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
-                        <label for="">Bayar</label>
+                        <label for="">Deposit</label>
                         <input class="form-control" type="text" name="bayar" data-index="${index}"
                             placeholder="Masukan nominal pembayaran..."
                             value="${number_format(
-                    value.bayar,
-                    0,
-                    ".",
-                    ","
-                )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
+                value.bayar,
+                0,
+                ".",
+                ","
+            )}" ${allowedPservis.includes(statusPservis) ? 'disabled' : ''}>
                     </div>
                 </div>
             </div>
@@ -589,28 +598,27 @@ const viewMetodePembayaran = () => {
                     <div class="form-group">
                         <label for="">Sisa Saldo</label>
                         <input class="form-control" type="text" name="sisasaldo_deposit" data-index="${index}" placeholder="Sisa saldo..." value="${number_format(
-                    value.sisasaldo_deposit,
-                    0,
-                    ".",
-                    ","
-                )}" disabled>
+                value.sisasaldo_deposit,
+                0,
+                ".",
+                ","
+            )}" disabled>
                     </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                         <label for="">Hutang</label>
                         <input class="form-control" type="text" name="hutang" data-index="${index}" placeholder="Hutang..." value="${number_format(
-                    value.hutang,
-                    0,
-                    ".",
-                    ","
-                )}" disabled>
+                value.hutang,
+                0,
+                ".",
+                ","
+            )}" disabled>
                     </div>
                 </div>
             </div>
             <hr style="color: #1381f0;" />
             `;
-            }
         }
     });
     return output;
@@ -638,7 +646,7 @@ const renderDeposit = () => {
     dataMetodePembayaran.sub_pembayaran_selected = getSubPembayaran;
     dataMetodePembayaran.user = jsonDataUser;
     dataMetodePembayaran.user_selected = userSelected;
-    dataMetodePembayaran.bayar = 0;
+    dataMetodePembayaran.bayar = getPembayaranServis.bayar;
     dataMetodePembayaran.dibayarkan_oleh = row.customer.nama_customer || "";
     dataMetodePembayaran.kembalian = getPembayaranServis.kembalian || 0;
     dataMetodePembayaran.hutang = getPembayaranServis.hutang || 0;
@@ -647,16 +655,20 @@ const renderDeposit = () => {
     dataMetodePembayaran.saldo_deposit = saldoDepositCustomer || 0;
     dataMetodePembayaran.sisasaldo_deposit = saldoDepositCustomer || 0;
     dataMetodePembayaran.index = 0;
+    dataMetodePembayaran.isWithDraw = 1;
 
     metodePembayaran.push(dataMetodePembayaran);
 
     handleIndexArray();
+    handleAnotherMethodLangsung();
     handleManageDeposit();
     handleManageHutang();
+    handleDisplayInputMetodePembayaran();
     handleButtonBayar();
     const output = viewMetodePembayaran();
     $(".output_metode_pembayaran").html(output);
 };
+
 const afterPayService = () => {
     const pembayaran_servis = row.pembayaran_servis;
     const indexTarget = pembayaran_servis.findIndex(item => item.kategori_pembayaran.nama_kpembayaran.toLowerCase() === 'deposit');
@@ -702,6 +714,7 @@ const afterPayService = () => {
             dataMetodePembayaran.saldo_deposit = saldoDeposit || 0;
             dataMetodePembayaran.sisasaldo_deposit = (saldoDeposit - value.bayar_pservis) || 0;
             dataMetodePembayaran.index = index;
+            dataMetodePembayaran.isWithDraw = value.isWithDraw || 1;
 
             pushMetodePembayaran.push(dataMetodePembayaran);
         });
@@ -832,6 +845,7 @@ const viewRender = () => {
             $('#load_viewdata').removeClass("d-none");
         },
         success: function (data) {
+            console.log('get data', data);
             // penerimaan servis
             const orderBarang = data.data.row.order_barang;
             const rowData = data.data.row;
@@ -1069,6 +1083,7 @@ const renderMetodePembayaran = (value) => {
         dataMetodePembayaran.saldo_deposit = 0;
         dataMetodePembayaran.sisasaldo_deposit = 0;
         dataMetodePembayaran.index = 0;
+        dataMetodePembayaran.isWithDraw = 1;
         metodePembayaran.push(dataMetodePembayaran);
     }
 
@@ -1078,6 +1093,42 @@ const renderMetodePembayaran = (value) => {
     handleButtonBayar();
     const output = viewMetodePembayaran();
     $(".output_metode_pembayaran").html(output);
+};
+
+const handleDisplayInputMetodePembayaran = () => {
+    metodePembayaran.map((value, index) => {
+        $(
+            `select[name="kategori_pembayaran_id_mp"][data-index="${index}"]`
+        ).val(value.kategori_pembayaran_selected.id);
+        $(`select[name="sub_pembayaran_id_mp"][data-index="${index}"]`).val(
+            value.sub_pembayaran_selected &&
+            value.sub_pembayaran_selected.id
+        );
+        $(`input[name="sisasaldo_deposit"][data-index="${index}"]`).val(
+            formatNumber(value.sisasaldo_deposit)
+        );
+        $(`input[name="bayar"][data-index="${index}"]`).val(
+            formatNumber(removeZeroAtFront(value.bayar))
+        );
+        $(`input[name="dibayar_oleh"][data-index="${index}"]`).val(
+            value.dibayarkan_oleh
+        );
+        $(`select[name="akun"][data-index="${index}"]`).val(
+            value.user_selected && value.user_selected.id
+        );
+        $(`input[name="kembalian"][data-index="${index}"]`).val(
+            formatNumber(value.kembalian)
+        );
+        $(`input[name="hutang"][data-index="${index}"]`).val(
+            formatNumber(value.hutang)
+        );
+        $(`input[name="nomor_kartu"][data-index="${index}"]`).val(
+            value.nomor_kartu
+        );
+        $(`input[name="nama_pemilik_kartu"][data-index="${index}"]`).val(
+            value.nama_pemilik_kartu
+        );
+    });
 };
 
 var setOrderBarang = [];
@@ -1335,7 +1386,7 @@ $(document).ready(function () {
     const handleDisplayInput = () => {
         setOrderBarang.map((vItem, iItem) => {
             $(`input[name="qty_orderbarang"][data-id="${vItem.id}"]`).val(
-                formatNumber(parseInt(vItem.qty_orderbarang, 10))
+                formatNumber(removeZeroAtFront(vItem.qty_orderbarang))
             );
             $(
                 `select[name="typediskon_orderbarang"][data-id="${vItem.id}"]`
@@ -1349,41 +1400,7 @@ $(document).ready(function () {
         });
     };
 
-    const handleDisplayInputMetodePembayaran = () => {
-        metodePembayaran.map((value, index) => {
-            $(
-                `select[name="kategori_pembayaran_id_mp"][data-index="${index}"]`
-            ).val(value.kategori_pembayaran_selected.id);
-            $(`select[name="sub_pembayaran_id_mp"][data-index="${index}"]`).val(
-                value.sub_pembayaran_selected &&
-                value.sub_pembayaran_selected.id
-            );
-            $(`input[name="sisasaldo_deposit"][data-index="${index}"]`).val(
-                formatNumber(value.sisasaldo_deposit)
-            );
-            $(`input[name="bayar"][data-index="${index}"]`).val(
-                formatNumber(value.bayar)
-            );
-            $(`input[name="dibayar_oleh"][data-index="${index}"]`).val(
-                value.dibayarkan_oleh
-            );
-            $(`select[name="akun"][data-index="${index}"]`).val(
-                value.user_selected && value.user_selected.id
-            );
-            $(`input[name="kembalian"][data-index="${index}"]`).val(
-                formatNumber(value.kembalian)
-            );
-            $(`input[name="hutang"][data-index="${index}"]`).val(
-                formatNumber(value.hutang)
-            );
-            $(`input[name="nomor_kartu"][data-index="${index}"]`).val(
-                value.nomor_kartu
-            );
-            $(`input[name="nama_pemilik_kartu"][data-index="${index}"]`).val(
-                value.nama_pemilik_kartu
-            );
-        });
-    };
+
 
     body.on(
         "input",
@@ -1694,6 +1711,7 @@ $(document).ready(function () {
                 cabang_id: jsonCabangId,
                 saldodeposit_pservis: item.saldo_deposit,
                 deposit_pservis: item.sisasaldo_deposit,
+                is_with_draw: item.isWithDraw || 1,
             });
         });
 
@@ -2048,4 +2066,16 @@ $(document).ready(function () {
         handleDisplayInputMetodePembayaran();
         handleButtonBayar();
     });
+
+    body.on('click', '.checkbox_saldo_withdraw', function (e) {
+        const index = $(this).data('index');
+        const isWithDraw = metodePembayaran[index].isWithDraw;
+        if (isWithDraw) {
+            metodePembayaran[index].isWithDraw = 0;
+            $(this).prop('checked', false);
+        } else {
+            metodePembayaran[index].isWithDraw = 1;
+            $(this).prop('checked', true);
+        }
+    })
 });

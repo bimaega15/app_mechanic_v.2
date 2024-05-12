@@ -176,7 +176,7 @@ $(document).ready(function () {
 
     const changeHandleInput = (id) => {
         let qty = removeCommas($(`input[name="qty"][data-id="${id}"]`).val());
-        qty = qty != '' ? parseInt(qty, 10) : 0;
+        qty = removeZeroAtFront(qty);
         const searchOrderItems = orderItems.findIndex((item) => item.id == id);
         const getTypeDiscount = $(
             `select[name="type_discount"][data-id="${id}"] option:selected`
@@ -518,8 +518,8 @@ $(document).ready(function () {
                 value.sub_pembayaran_selected.id
             );
             $(`input[name="bayar"][data-index="${index}"]`).val(
-                formatNumber(parseInt(value.bayar, 10))
-            );
+                formatNumber(removeZeroAtFront(value.bayar)))
+                ;
             $(`input[name="dibayar_oleh"][data-index="${index}"]`).val(
                 value.dibayarkan_oleh
             );
