@@ -98,7 +98,10 @@ class StockMasukController extends Controller
                 'id' => $key,
                 'label' => $item
             ];
-            $status_tstock_data[] = strtolower($item);
+            $dataItem = strtolower($item);
+            if ($dataItem == 'diterima' || $dataItem == 'ditolak') {
+                $status_tstock_data[] = strtolower($item);
+            }
         }
         return view('transferstock::stokMasuk.detail', compact('row', 'array_status_tstock', 'status_tstock_data'));
     }
@@ -124,12 +127,14 @@ class StockMasukController extends Controller
                     ->where('cabang_id', $cabang_id_penerima)
                     ->first();
 
+                // menambahkan stock
                 if ($getBarangCabangPenerima) {
                     $getBarangCabangPenerima->update([
                         'stok_barang' => $getBarangCabangPenerima->stok_barang + $qty,
                     ]);
                 }
 
+                // mengurangi stock
                 $getBarangCabangPemberi = Barang::where('barcode_barang', $getBarang->barcode_barang)
                     ->where('cabang_id', $cabang_id_awal)
                     ->first();

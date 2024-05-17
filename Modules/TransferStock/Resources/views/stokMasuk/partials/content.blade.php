@@ -41,9 +41,12 @@
                             </form>
                         </td>
                         <td>
-                            <strong>
-                                {{ $row->keterangan_tstock }}
-                            </strong>
+                            <div class="d-flex flex-column">
+                                <span>Catatan</span>
+                                <strong>
+                                    {{ $row->keterangan_tstock }}
+                                </strong>
+                            </div>
                         </td>
                     </tr>
                 </tfoot>
