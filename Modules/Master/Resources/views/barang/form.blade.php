@@ -3,8 +3,9 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-lg-6">
-                    <x-form-input-horizontal label="Kode Barang" name="barcode_barang" placeholder="Kode Barang..."
-                        value="{{ isset($row) ? $row->barcode_barang ?? '' : '' }}" />
+                    <x-form-input-horizontal class="autocomplete" label="Kode Barang" name="barcode_barang"
+                        placeholder="Kode Barang..." value="{{ isset($row) ? $row->barcode_barang ?? '' : '' }}"
+                        styleRight="position: relative;" styleInput="padding-right: 40px;" />
                     <x-form-input-horizontal label="Nama Barang" name="nama_barang" placeholder="Nama Barang..."
                         value="{{ isset($row) ? $row->nama_barang ?? '' : '' }}" />
                     <x-form-textarea-horizontal label="Deskripsi" name="deskripsi_barang" placeholder="Deskripsi..."
@@ -44,4 +45,5 @@
 </div>
 
 
+<script class="baseurl" data-value="{{ url('/') }}"></script>
 <script src="{{ asset('js/master/barang/form.js') }}"></script>

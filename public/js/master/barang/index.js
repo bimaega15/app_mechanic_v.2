@@ -1,6 +1,7 @@
 // "use strict";
 var datatable;
 var myModal;
+var body = $("body");
 
 $(document).ready(function () {
     function initDatatable() {
@@ -56,7 +57,6 @@ $(document).ready(function () {
     }
     initDatatable();
 
-    var body = $("body");
     // handle btn add data
     body.on("click", ".btn-add", function () {
         showModal({

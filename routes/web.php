@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ACompleteBarang;
 use App\Http\Controllers\ChangeCabangController;
 use App\Http\Controllers\MyProfileController;
 use App\Http\Controllers\SelectSearchController;
@@ -40,4 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::get('select/supplier', [SelectSearchController::class, 'supplier']);
     Route::get('select/hargaServis', [SelectSearchController::class, 'hargaServis']);
     Route::get('select/users', [SelectSearchController::class, 'users']);
+
+    Route::get('autocomplete/barang', [ACompleteBarang::class, 'barang']);
 });
